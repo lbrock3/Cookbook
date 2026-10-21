@@ -1,0 +1,174 @@
+FAMILY COOKBOOK: HOW TO USE THE RECIPE EDITOR
+=============================================
+
+The editor lets you add, change and delete recipes right on the website,
+with no code and no re-uploading. Only the keeper (you) can use it.
+Visitors never see the editor.
+
+
+1. SIGN IN
+----------
+  1. Open your cookbook (cookv2.com).
+  2. Scroll to the very bottom of any page.
+  3. Click "Keeper sign-in", type your keeper password, click Sign in.
+  4. The footer now says "Keeper mode is on", and an "Edit Recipes" link
+     appears in the menu bar at the top.
+
+  Click "Sign out" in the footer when you are done, especially on a
+  shared or public computer. If you wait a long time, the sign-in ends on
+  its own and you just sign in again.
+
+  Your password lives in the file config.php on your GoDaddy hosting
+  (cPanel > File Manager > public_html). To change it, edit that file there.
+  If keeper sign-in is missing from the footer, config.php still has the
+  default password CHANGE-THIS-PASSWORD.
+
+
+2. ADD A NEW RECIPE
+-------------------
+  1. Sign in, then click "Edit Recipes" in the menu, then "Add a recipe".
+     (Shortcut: on any chapter page, click "Add a recipe to this chapter".)
+  2. Pick the Chapter the recipe belongs in.
+  3. Fill in the form (details in section 4).
+  4. Click Preview to see exactly how it will look.
+  5. Click Save recipe. It appears on the site right away, in its chapter
+     and in search.
+
+
+3. EDIT AN EXISTING RECIPE
+--------------------------
+  Option A: open the recipe, then click "Edit this recipe".
+  Option B: Edit Recipes in the menu, find it in the list, click Edit.
+
+  Change anything, click Preview if you like, then Save recipe.
+
+  To MOVE a recipe to a different chapter, change the Chapter box at the top
+  of the form and click Save recipe. Its comments and photo go with it. Old
+  links, menu entries, and visitors' saved favorites and grocery lists keep
+  working, because the site remembers where the recipe went. Edit Recipes
+  lists it with a "Moved" tag. If you move it back later, it simply returns.
+
+
+4. THE FORM, FIELD BY FIELD
+---------------------------
+  Recipe title       Required. Each title needs to be different within its
+                     chapter. If you see "A recipe with that web address
+                     already exists", change the title a little.
+  Submitted by       Who sent the recipe in.
+  Recipe from        Where it came from, like "Grandma Brock".
+  Short description  One or two sentences about what makes it good.
+  Prep / Cook /      Free text, like "15 minutes" or "1 hour".
+  Total time
+  Servings           Like "4" or "12 cookies".
+  Difficulty         Easy, Moderate or Involved. Optional.
+  Ingredients        ONE INGREDIENT PER LINE. Press Enter between them.
+  Directions         ONE STEP PER LINE. Do not type step numbers; they are
+                     added for you.
+  Photo              Optional. Choose a picture of the finished dish. It is
+                     shrunk for you, so any size works. Use "Remove photo"
+                     to take it off. Click Preview to see it.
+  Special tools      Separate with semicolons: Dutch oven; thermometer
+  Notes              Tips, substitutions, or the story behind the recipe.
+
+  Only the title is required, but a recipe with ingredients and directions
+  is far more useful.
+
+  Ingredient groups
+    To put a heading inside the ingredient list, start the line with a
+    label and a colon:
+
+        Sauce: 2 tablespoons soy sauce
+        1 teaspoon sugar
+        Marinade: 1 pound flank steak
+
+    Lines after a labeled line stay in that group until the next label.
+
+  Writing ingredients so the Grocery List works well
+    The Grocery List adds amounts together across recipes, so it helps to
+    put the amount first, then the unit, then the item:
+
+        2 cups flour            (good)
+        1 1/2 pounds chicken    (good)
+        1 can (15 oz) beans     (good)
+        flour, 2 cups           (will not combine as well)
+
+    Fractions like 1/2 and 1 1/2 are fine. "Salt to taste" is fine too;
+    it just shows up with no amount.
+
+
+4b. RECIPES SENT IN BY THE FAMILY
+---------------------------------
+  Anyone can send a recipe from "Share a Recipe". Nothing shows in the book
+  until you approve it.
+
+  1. When something is waiting, a number appears next to "Edit Recipes" in
+     the menu, and the footer says how many are waiting.
+  2. Open Edit Recipes. Under "Waiting for your approval", click Review.
+  3. The recipe opens in the editor with everything filled in, and the
+     sender's photo if they added one. Fix anything you like.
+  4. Click Save recipe to add it to the book, or "Reject this one" (then
+     "Yes, reject") to throw it away. A rejected recipe and its photo are
+     deleted for good.
+
+
+5. DELETE A RECIPE
+------------------
+  Open the recipe's Edit page and click "Delete this recipe", then "Yes, delete" (or "Keep it" to cancel).
+  It is hidden from the site, but not lost forever (see section 6).
+
+
+6. UNDO AND RESTORE
+-------------------
+  Edit Recipes lists everything you have changed, tagged:
+    Added    a recipe you created
+    Edited   an original recipe you changed
+    Deleted  a recipe you removed
+    Moved    a recipe you moved to another chapter (just a note; the
+             recipe itself is listed under its new chapter)
+
+  Undo my changes   puts an edited original recipe back exactly as it was.
+  Restore           brings back a deleted recipe.
+
+  Your own added recipes have no "original" to go back to; delete them if
+  you do not want them.
+
+
+6b. NOTES AND BACKUPS
+---------------------
+  "Made it?" notes: visitors add these under each recipe. As keeper you
+  can delete any of them with the Delete link beside the note.
+
+  Backups: the site saves a copy of the database by itself about once a
+  day (the last 14 are kept). At the bottom of Edit Recipes, "Download a
+  full backup" gives you a zip with the database and all photos. Keep one
+  somewhere off the server now and then.
+
+
+7. WHERE YOUR CHANGES ARE KEPT
+------------------------------
+  Edits are saved on the server in the "data" folder, together with the
+  comments and discussion. Photos are in the "photos" folder. The original
+  recipes are built into index.html.
+
+  - Replacing index.html with a newer version does NOT erase your edits.
+  - Back up the "data" and "photos" folders regularly. If they are lost,
+    your edits, comments and photos are lost.
+  - Never overwrite or delete "data", "photos" or config.php when updating
+    the site.
+
+
+8. TROUBLESHOOTING
+------------------
+  "Your keeper sign-in ended"       Sign in again at the bottom of the page.
+  "That photo couldn't be used"     Try a different picture (JPEG or PNG).
+  "Couldn't save"                   Check your internet or server, then try
+                                    again. Your text is still in the form.
+  "Please give the recipe a title"  Fill in the Recipe title box.
+  No "Edit this recipe" button      You are not signed in as keeper.
+  Changes not showing               Refresh the page (Ctrl+Shift+R on a PC,
+                                    Cmd+Shift+R on a Mac).
+  Editor says it is part of the     You opened the preview copy. The editor
+  GoDaddy version                   only works on the hosted site.
+
+  Tip: write long recipes in a text editor first, then paste them into the
+  Ingredients and Directions boxes. Each pasted line becomes one item.

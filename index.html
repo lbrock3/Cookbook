@@ -289,10 +289,61 @@ h2[tabindex="-1"]:focus,h2[tabindex="-1"]:focus-visible,main:focus,main:focus-vi
   .gl-recipes select.ti{min-height:44px}
 }
 
+.rphoto{margin:1rem 0 1.4rem}
+.rphoto img{display:block; width:100%; max-height:28rem; object-fit:cover; border:1px solid var(--rule); border-radius:3px; background:var(--card)}
+.cthumb{display:block; width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:3px; margin:0 0 .6rem; background:var(--rule)}
+.pbox{min-height:0}
+.pbox img{display:block; max-width:14rem; max-height:11rem; border:1px solid var(--rule); border-radius:3px; margin:.2rem 0 .5rem; object-fit:cover}
+.pfile{display:flex; flex-wrap:wrap; gap:.6rem 1rem; align-items:center}
+.subform .row{display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr))}
+.hpt{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}
+
+
+/* stage 3: made-it notes, shared lists, backups */
+.made{margin-top:2rem; padding-top:1.25rem; border-top:3px double var(--rule)}
+.made h3{font-size:1.45rem; margin:0 0 .5rem; font-style:italic; font-weight:500}
+.mlist{list-style:none; margin:0 0 1rem; padding:0; display:grid; gap:.9rem}
+.mlist li{display:grid; grid-template-columns:auto minmax(0,1fr); gap:.9rem; padding-bottom:.9rem; border-bottom:1px dotted var(--rule); align-items:start}
+.mlist li:not(.has-img){grid-template-columns:minmax(0,1fr)}
+.mlist img{display:block; width:7rem; height:5.25rem; object-fit:cover; border:1px solid var(--rule); border-radius:3px; background:var(--paper-2)}
+.mlist .who{font-weight:650}
+.mlist .when{color:var(--soft); font-size:.88rem; margin-left:.5rem}
+.mlist p{margin:.2rem 0 0; overflow-wrap:anywhere; white-space:pre-wrap}
+.mform{max-width:36rem}
+.mform summary{list-style:none; display:inline-flex; cursor:pointer}
+.mform summary::-webkit-details-marker{display:none}
+.mform form{display:grid; gap:.9rem; margin-top:1rem}
+.sharebox{margin:0 0 1rem; padding:.9rem 1rem; border:1px solid var(--rule); border-radius:4px; background:var(--paper-2); display:grid; gap:.6rem; max-width:40rem}
+.sharebox .row{display:flex; flex-wrap:wrap; gap:.5rem}
+.sharebox input{flex:1 1 14rem; min-width:0}
+.sharebox p{margin:0; font-size:.92rem; color:var(--soft)}
+.bkp{margin-top:2rem}
+.bkp ul{margin:.4rem 0 0 1.1rem; padding:0; color:var(--soft); font-size:.92rem}
+/* stage 2: favorites, scaling, filters */
+.fav-card{position:absolute; bottom:.5rem; right:.6rem; width:1.9rem; height:1.9rem; display:grid; place-items:center; padding:0; border:0; background:none; color:var(--accent); font:inherit; font-size:1.3rem; line-height:1; cursor:pointer; z-index:1; border-radius:50%}
+.fav-card:hover{background:var(--paper-2)}
+.grid .card .foot{padding-right:2.2rem}
+.fav-btn[aria-pressed="true"]{background:var(--accent); color:var(--on-accent)}
+.scaler{display:flex; flex-wrap:wrap; gap:.35rem; align-items:center; margin:0 0 1rem}
+.scaler .lbl{font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--soft); margin-right:.3rem}
+.scaler button{font:inherit; font-size:.92rem; min-width:2.6rem; padding:.28rem .55rem; border:1px solid var(--rule); border-radius:999px; background:var(--card); color:var(--ink); cursor:pointer}
+.scaler button:hover{border-color:var(--accent)}
+.scaler button[aria-pressed="true"]{background:var(--accent); color:var(--on-accent); border-color:var(--accent)}
+.scale-note{margin:0 0 .9rem; font-size:.9rem; font-style:italic; color:var(--soft)}
+.sflink{font-size:.8rem; color:var(--soft); white-space:nowrap; align-self:center; margin-left:.7rem}
+.sfil{display:grid; gap:.9rem 1rem; grid-template-columns:repeat(auto-fit,minmax(min(100%,11.5rem),1fr)); background:var(--paper-2); border:1px solid var(--rule); border-radius:4px; padding:1rem; margin:0 0 1.25rem}
+.sfil label{display:block; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--soft); margin:0 0 .25rem}
+.sfil .chk{display:flex; align-items:center; gap:.5rem; font-size:.95rem; letter-spacing:0; text-transform:none; color:var(--ink); margin:0; min-height:2rem}
+.sfil .chk input{width:1.1rem; height:1.1rem; accent-color:var(--accent)}
+.sfil .ti{padding:.4rem .6rem; font-size:.95rem}
+.sfil .full{grid-column:1/-1; display:flex; flex-wrap:wrap; gap:.5rem 1.5rem; align-items:center}
+.pfoot{display:none}
+@media (max-width:40rem){ .fav-card{width:44px; height:44px; bottom:.2rem; right:.35rem} .grid .card .foot{padding-right:3rem} .scaler button{min-height:44px; min-width:3rem} .sfil .ti,.sfil select{min-height:44px} .sfil .chk{min-height:44px} }
 @media print{
+  .made,.sharebox{display:none !important}
   :root{--paper:#fff; --card:#fff; --paper-2:#f4f4f4; --ink:#000; --soft:#333; --rule:#999; --accent:#000}
   body{background:#fff; padding:0; font-size:11pt}
-  .mast,.nav,.pager,.crumbs,footer,.skip,.cm,.noprint{display:none !important}
+  .mast,.nav,.pager,.crumbs,footer,.skip,.cm,.noprint,.abar{display:none !important}
   .gl-wrap{display:block}
   .gl-items input[type="checkbox"]{accent-color:#000}
   main{padding:0}
@@ -300,6 +351,21 @@ h2[tabindex="-1"]:focus,h2[tabindex="-1"]:focus-visible,main:focus,main:focus-vi
   .body{grid-template-columns:4fr 7fr; gap:1.5rem}
   .recipe h2{font-size:24pt}
   .steps li,.ing li{break-inside:avoid}
+  @page{margin:.55in}
+  body{font-size:10.5pt; line-height:1.38}
+  .scaler,.sflink,.fav-card{display:none !important}
+  .recipe h2{font-size:21pt; margin-bottom:.15rem}
+  .desc{font-size:11pt; margin-bottom:.7rem}
+  .by{margin-bottom:.5rem}
+  .rphoto{margin:.4rem 0 .7rem}
+  .rphoto img{max-height:2.3in; border-radius:0}
+  .meta{margin-bottom:.8rem}
+  .meta div{padding:.35rem .6rem}
+  .ing li{padding:.18rem 0 .18rem 1rem}
+  .ing li::before{top:.58rem}
+  .steps li{padding-bottom:.45rem}
+  .extra{margin-top:.8rem}
+  .pfoot{display:block; text-align:center; font-size:9pt; color:#555; border-top:1px solid #999; margin-top:.9rem; padding-top:.35rem}
 }
 </style>
 <style id="sa"></style>
@@ -314,16 +380,17 @@ h2[tabindex="-1"]:focus,h2[tabindex="-1"]:focus-visible,main:focus,main:focus-vi
       <ul>
         <li><a href="#" data-nav="home">Contents</a></li>
         <li><a href="#menus" data-nav="menus">Favorite Menus</a></li>
+        <li><a href="#favorites" data-nav="favorites">My Favorites</a></li>
         <li><a href="#grocery" data-nav="grocery">Grocery List<span class="gl-count" id="glc"></span></a></li>
         <li class="dsc"><a href="#discuss" data-nav="discuss">Discussion</a></li>
-        <li class="adm" hidden><a href="#keeper" data-nav="keeper">Edit Recipes</a></li>
+        <li class="adm" hidden><a href="#keeper" data-nav="keeper" id="edlink">Edit Recipes</a></li>
         <li><a href="#submit" data-nav="submit">Share a Recipe</a></li>
-        <li><a href="#surprise">Surprise Me</a></li>
+        <li><a href="#surprise" data-nav="surprise">Surprise Me</a></li>
       </ul>
       <form class="search" role="search" id="sform">
         <label class="skip" for="q" style="position:absolute;left:-999px">Search recipes</label>
         <input id="q" type="search" placeholder="Search recipes or ingredients" autocomplete="off" spellcheck="false">
-      </form>
+      </form><a class="sflink" href="#search" data-nav="search">Filters</a>
     </nav>
   </header>
 
@@ -361,8 +428,13 @@ function buildIndex() {
 }
 buildIndex();
 let RSIG = "[]", RROWS = [];
+const ALIAS = {};
+function canonId(id) { let n = 0; while (!recBy[id] && ALIAS[id] && n++ < 8) id = ALIAS[id]; return id; }
+function lookup(id) { return recBy[canonId(id)] || null; }
 function applyOverrides(rows) {
   RROWS = rows || [];
+  for (const k in ALIAS) delete ALIAS[k];
+  RROWS.forEach(x => { if (x.deleted && x.r && typeof x.r.to === "string") ALIAS[x.cat + "~" + x.slug] = x.r.to; });
   D.cats.forEach((c, ci) => {
     const base = BASE_D.cats[ci].recipes, mine = RROWS.filter(x => x.cat === c.slug);
     const gone = new Set(mine.filter(x => x.deleted).map(x => x.slug)), edits = {};
@@ -374,6 +446,12 @@ function applyOverrides(rows) {
     c.recipes = list;
   });
   buildIndex();
+  try {   // saved favorites and grocery picks follow a recipe that was moved to another chapter
+    let ch = false;
+    const fix = id => { const n = canonId(id); if (n !== id) ch = true; return n; };
+    FAV = FAV.map(fix).filter((x, i, a) => a.indexOf(x) === i); if (ch) favSave();
+    ch = false; GL.r.forEach(e => { e.id = fix(e.id); }); if (ch) glSave();
+  } catch (e) {}
 }
 const ROMAN = n => n;
 const rlink = r => "#" + r.cat + "~" + r.slug;
@@ -415,11 +493,13 @@ function home() {
     "</aside></div>";
 }
 
-function category(c) {
-  const cards = c.recipes.map(r =>
-    '<li><a class="card" href="' + rlink(r) + '"><h3>' + esc(r.title) + "</h3>" +
+function cardHtml(r) {
+  return '<li><a class="card" href="' + rlink(r) + '">' + (r.img ? '<img class="cthumb" src="' + esc(r.img) + '" alt="" loading="lazy">' : "") + "<h3>" + esc(r.title) + "</h3>" +
     (r.desc ? "<p>" + esc(r.desc) + "</p>" : "") +
-    '<div class="foot"><span>' + esc(timeFor(r) ? (r.total ? "Total " : r.cook ? "Cook " : "Prep ") + shortTime(timeFor(r)) : (r.by || r.attr ? esc(r.attr || r.by) : "")) + "</span>" + (r.diff ? dots(r.diff) : "") + "</div></a>" + glBtn(r, "card") + "</li>").join("");
+    '<div class="foot"><span>' + esc(timeFor(r) ? (r.total ? "Total " : r.cook ? "Cook " : "Prep ") + shortTime(timeFor(r)) : (r.by || r.attr ? esc(r.attr || r.by) : "")) + "</span>" + (r.diff ? dots(r.diff) : "") + "</div></a>" + glBtn(r, "card") + favBtn(r, "card") + "</li>";
+}
+function category(c) {
+  const cards = c.recipes.map(cardHtml).join("");
   return '<p class="crumbs"><a href="#">Contents</a><span aria-hidden="true">/</span>' + esc(c.name) + "</p>" +
     '<div class="chap"><span class="n">Chapter ' + ROMAN(c.n) + '</span><h2 id="h">' + esc(c.name) + '</h2></div>' +
     '<p class="count">' + c.recipes.length + (c.recipes.length === 1 ? " recipe" : " recipes") + "</p>" +
@@ -431,9 +511,9 @@ function shortTime(t) { t = String(t); return t.length > 26 ? t.slice(0, 24).rep
 function recipe(r, opts) {
   const c = catBy[r.cat];
   const metaRows = [["Prep", r.prep], ["Cook", r.cook], ["Total", r.total], ["Serves", r.serves]].filter(x => x[1]);
-  let meta = metaRows.map(x => "<div><dt>" + x[0] + "</dt><dd>" + esc(x[1]) + "</dd></div>").join("");
+  let meta = metaRows.map(x => "<div><dt>" + x[0] + "</dt><dd" + (x[0] === "Serves" ? ' data-sv="' + esc(x[1]) + '"' : "") + ">" + esc(x[1]) + "</dd></div>").join("");
   if (r.diff) meta += "<div><dt>Difficulty</dt><dd>" + dots(r.diff) + " " + DIFF[r.diff] + "</dd></div>";
-  const ing = r.ing ? groupIng(r.ing).map(g => (g.sec ? "<h4>" + esc(g.sec) + "</h4>" : "") + "<ul>" + g.items.map(i => "<li>" + esc(i) + "</li>").join("") + "</ul>").join("") : '<p class="empty">No ingredients listed.</p>';
+  const ing = r.ing ? groupIng(r.ing).map(g => (g.sec ? "<h4>" + esc(g.sec) + "</h4>" : "") + "<ul>" + g.items.map(i => '<li data-o="' + esc(i) + '">' + esc(i) + "</li>").join("") + "</ul>").join("") : '<p class="empty">No ingredients listed.</p>';
   const steps = r.dir ? '<ol class="steps">' + r.dir.map(s => "<li>" + esc(s) + "</li>").join("") + "</ol>" : '<p class="empty">No directions listed.</p>';
   const tools = r.tools ? '<div class="note"><b>Special tools</b>' + esc(r.tools.split(/\s*;\s*/).join(" · ")) + "</div>" : "";
   const notes = r.notes ? '<div class="note"><b>Notes</b>' + esc(r.notes) + "</div>" : "";
@@ -447,12 +527,14 @@ function recipe(r, opts) {
     (byline(r) ? '<p class="by">' + byline(r) + "</p>" : "") +
     (r.desc ? '<p class="desc">' + esc(r.desc) + "</p>" : "") +
     (opts && opts.preview ? "" : glBtn(r, "full")) +
+    (r.img ? '<figure class="rphoto"><img src="' + esc(r.img) + '" alt="' + esc(r.title) + '" loading="lazy"></figure>' : "") +
     (meta ? '<dl class="meta">' + meta + "</dl>" : "") +
-    '<div class="body"><section class="ing" aria-labelledby="ih"><h3 id="ih">Ingredients</h3>' + ing + '</section><section aria-labelledby="dh"><h3 id="dh">Directions</h3>' + steps + "</section></div>" +
+    '<div class="body"><section class="ing" aria-labelledby="ih"><h3 id="ih">Ingredients</h3>' + (opts && opts.preview ? "" : scalerHtml(r)) + ing + '</section><section aria-labelledby="dh"><h3 id="dh">Directions</h3>' + steps + "</section></div>" +
     ((tools || notes) ? '<div class="extra">' + tools + notes + "</div>" : "") +
-    "</div></article>";
+    '<p class="pfoot">From the Family Cookbook</p></div></article>';
   if (opts && opts.preview) return art;
-  return crumbs + '<div class="abar" data-kind="recipe" data-cat="' + esc(r.cat) + '" data-slug="' + esc(r.slug) + '"></div>' + art + commentsSection(r.cat + "~" + r.slug) + pager;
+  const again = state.sPick ? '<p class="noprint" style="margin:-.4rem 0 1rem"><button class="lk" type="button" data-surprise>Not feeling it? Surprise me again</button> <span aria-hidden="true">·</span> <a class="lk" href="#surprise">Change what you’re in the mood for</a></p>' : "";
+  return crumbs + again + '<div class="abar" data-kind="recipe" data-cat="' + esc(r.cat) + '" data-slug="' + esc(r.slug) + '"></div>' + art + madeSection(r.cat + "~" + r.slug) + commentsSection(r.cat + "~" + r.slug) + pager;
 }
 
 function menusIndex() {
@@ -462,40 +544,67 @@ function menusIndex() {
 }
 function menuPage(m) {
   const items = m.items.map(it => {
-    const r = recBy[it.cat + "~" + it.slug];
+    const r = lookup(it.cat + "~" + it.slug);
     return "<li>" + (r ? '<a href="' + rlink(r) + '">' + esc(it.title) + "</a><small>" + esc(r.catName) + "</small>" : esc(it.title)) + "</li>";
   }).join("");
   return '<p class="crumbs"><a href="#">Contents</a><span aria-hidden="true">/</span><a href="#menus">Favorite Menus</a></p>' +
     '<div class="menu-sheet"><div class="in"><p class="eyebrow">Favorite menu</p><h2 id="h">' + esc(m.title) + '</h2><div class="orn" aria-hidden="true"><i></i></div><ul class="menu-list">' + items + '</ul></div></div><div class="rtools noprint" style="justify-content:center;margin:1.25rem 0 0"><button type="button" class="btn ghost" data-gl-menu="' + esc(m.slug) + '">Add every dish to my grocery list</button><span class="gl-status" role="status"></span><a class="lk" href="#grocery" data-glview hidden>View grocery list</a></div>';
 }
 
+function submitForm() {
+  const sel = '<div class="fld"><label for="s-cat">Which chapter does it belong in?</label><select class="ti" id="s-cat" name="cat">' + D.cats.map(x => '<option value="' + esc(x.slug) + '">' + esc(x.name) + "</option>").join("") + "</select></div>";
+  return '<p class="crumbs"><a href="#">Contents</a><span aria-hidden="true">/</span>Share a Recipe</p>' +
+    '<div class="chap"><h2 id="h">Share a Recipe</h2></div><p class="count">Send in a recipe for the family book. The keeper looks at each one before it is added.</p>' +
+    '<div id="subdone" class="panel" hidden><h3>Thank you!</h3><p>Your recipe was sent to the keeper. It will show up in the book once it has been looked over.</p><p><a class="btn ghost" href="#submit" data-again>Send another</a></p></div>' +
+    '<form class="rform subform" data-subform>' +
+    '<div class="row">' + fld("Your name", "by", "", "") + fld("Recipe from", "attr", "", "") + "</div>" +
+    fld("Recipe title", "title", "", "") + sel +
+    fld("Short description", "desc", "", "One or two sentences about what makes it good.", "area") +
+    '<div class="row">' + fld("Prep time", "prep", "", "") + fld("Cook time", "cook", "", "") + fld("Servings", "serves", "", "") + "</div>" +
+    '<div class="fld"><label for="f-ing">Ingredients</label><textarea class="ta tall" id="f-ing" name="ing" rows="8"></textarea><small class="hint">One ingredient per line, with the amount first, like “2 cups flour”.</small></div>' +
+    '<div class="fld"><label for="f-dir">Directions</label><textarea class="ta tall" id="f-dir" name="dir" rows="8"></textarea><small class="hint">One step per line. Step numbers are added for you.</small></div>' +
+    fld("Notes", "notes", "", "Tips, substitutions, or the story behind the recipe.", "area") +
+    photoField("") +
+    '<div class="hpt" aria-hidden="true"><label>Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label></div>' +
+    '<div class="rbar"><button class="btn" type="submit">Send to the keeper</button></div><p class="rmsg" role="status"></p></form>';
+}
+function photoField(img) {
+  return '<div class="fld"><label for="f-photo">Photo (optional)</label><div class="pbox">' + (img ? '<img src="' + esc(img) + '" alt="">' : "") + '</div>' +
+    '<div class="pfile"><input type="file" id="f-photo" accept="image/*" data-photo>' + (img ? '<button type="button" class="lk" data-ract="photorm">Remove photo</button>' : "") + '</div>' +
+    '<small class="hint">A picture of the finished dish. It is shrunk for you, so any size photo works.</small></div>';
+}
 function submit() {
+  if (PHP) return submitForm();
   return '<p class="crumbs"><a href="#">Contents</a><span aria-hidden="true">/</span>Share a Recipe</p>' +
     '<div class="chap"><h2 id="h">Add to the Book</h2></div><p class="count">The form opens in a new tab, and your answers go to the cookbook’s keeper.</p>' +
     '<div class="panel" style="max-width:34rem"><h3>New recipe submissions</h3><p>Send in a recipe with its ingredients, directions, and who it came from.</p><a class="btn" href="' + FORMS.recipe + '" target="_blank" rel="noopener">Open the recipe form</a><span class="url">' + FORMS.recipe + '</span></div>';
 }
 
 function hl(text, toks) {
-  let s = esc(text);
-  toks.forEach(t => { if (t.length > 1) s = s.replace(new RegExp("(" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig"), "<mark>$1</mark>"); });
-  return s;
+  const ts = toks.filter(t => t.length > 1).map(t => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  if (!ts.length) return esc(text);
+  return String(text).split(new RegExp("(" + ts.join("|") + ")", "ig")).map((part, i) => i % 2 ? "<mark>" + esc(part) + "</mark>" : esc(part)).join("");
 }
 function search() {
+  return '<div class="chap"><h2 id="h">Search</h2></div>' + filterPanel() + '<div id="sres">' + searchResults() + "</div>";
+}
+function searchResults() {
   const q = state.q.trim().toLowerCase();
-  const toks = q.split(/\s+/).filter(Boolean);
-  let head = '<div class="chap"><h2 id="h">Search</h2></div>';
-  if (!toks.length) return head + '<p class="empty" role="status">Type a dish, a cook’s name, or an ingredient in the search box above.</p>';
-  const hits = all.filter(r => toks.every(t => r._h.includes(t)))
-    .map(r => ({ r, s: (toks.every(t => r._t.includes(t)) ? 0 : 1) + (r._t.startsWith(toks[0]) ? -0.5 : 0) }))
-    .sort((a, b) => a.s - b.s || a.r._t.localeCompare(b.r._t)).map(x => x.r);
+  const toks = q.split(/\s+/).filter(Boolean), fa = filtersActive();
+  if (!toks.length && !fa) return '<p class="empty" role="status">Type a dish, a cook’s name, or an ingredient in the search box above, or choose some filters.</p>';
+  let hits = all.filter(r => toks.every(t => r._h.includes(t)) && passFilters(r));
+  hits = toks.length
+    ? hits.map(r => ({ r, s: (toks.every(t => r._t.includes(t)) ? 0 : 1) + (r._t.startsWith(toks[0]) ? -0.5 : 0) })).sort((a, b) => a.s - b.s || a.r._t.localeCompare(b.r._t)).map(x => x.r)
+    : hits.sort((a, b) => a._t.localeCompare(b._t));
   const list = hits.slice(0, 80).map(r => {
     let snip = r.desc || "";
-    const ingHit = (r.ing || []).find(i => toks.some(t => i.toLowerCase().includes(t)));
+    const ingHit = toks.length ? (r.ing || []).find(i => toks.some(t => i.toLowerCase().includes(t))) : null;
     if (ingHit && !toks.every(t => (r.desc || "").toLowerCase().includes(t))) snip = "Ingredient: " + ingHit;
-    return '<li><a class="t" href="' + rlink(r) + '">' + hl(r.title, toks) + '</a><span class="cat">' + esc(r.catName) + "</span> " + glBtn(r, "link") + (snip ? "<p>" + hl(snip.length > 170 ? snip.slice(0, 168) + "…" : snip, toks) + "</p>" : "") + "</li>";
+    const mm = recMins(r), tm = mm === null ? "" : " · " + (mm >= 60 ? Math.floor(mm / 60) + " hr" + (mm % 60 ? " " + (mm % 60) + " min" : "") : mm + " min");
+    return '<li><a class="t" href="' + rlink(r) + '">' + hl(r.title, toks) + '</a><span class="cat">' + esc(r.catName) + esc(tm) + "</span> " + glBtn(r, "link") + (snip ? "<p>" + hl(snip.length > 170 ? snip.slice(0, 168) + "…" : snip, toks) + "</p>" : "") + "</li>";
   }).join("");
-  return head + '<p class="count" role="status">' + hits.length + (hits.length === 1 ? " recipe" : " recipes") + ' for “' + esc(state.q.trim()) + "”" + (hits.length > 80 ? " (showing the first 80)" : "") + "</p>" +
-    (hits.length ? '<ul class="results">' + list + "</ul>" : '<p class="empty">Nothing matched. Try a shorter word, like “chicken” or “lemon”.</p>');
+  return '<p class="count" role="status">' + hits.length + (hits.length === 1 ? " recipe" : " recipes") + (toks.length ? ' for “' + esc(state.q.trim()) + "”" : "") + (fa ? " with your filters" : "") + (hits.length > 80 ? " (showing the first 80)" : "") + "</p>" +
+    (hits.length ? '<ul class="results">' + list + "</ul>" : '<p class="empty">Nothing matched. Try a shorter word, like “chicken” or “lemon”' + (fa ? ", or clear a filter" : "") + ".</p>");
 }
 
 /* ---------- discussion (shared database) ---------- */
@@ -628,7 +737,7 @@ async function removePost(p) {
   await DB.db.doc("posts/" + p.id).delete();
 }
 /* PHP backend (GoDaddy): comments live in api.php + SQLite */
-let adminOpen = false, adminMsg = "", sig = "";
+let adminOpen = false, adminMsg = "", sig = "", SUBSIG = "[]", MSIG = "[]", BSIG = "";
 async function api(body) {
   const r = await fetch("api.php", { method: "POST", headers: { "Content-Type": "application/json", "X-Requested-With": "cookbook" }, body: JSON.stringify(body), credentials: "same-origin" });
   const j = await r.json().catch(() => ({}));
@@ -642,11 +751,17 @@ async function phpRefresh(force) {
   const wasAdmin = DB.admin;
   DB.admin = !!j.admin; DB.adminReady = !!j.adminReady;
   const rs = JSON.stringify(j.recipes || []);
+  const subsSig = JSON.stringify(j.subs || []);
+  const ms = JSON.stringify(j.made || []);
+  if (ms !== MSIG) { MSIG = ms; DB.made = j.made || []; paintMade(); }
+  const bs = JSON.stringify([j.backups || [], !!j.zip]);
+  if (bs !== BSIG) { BSIG = bs; DB.backups = j.backups || []; DB.zip = !!j.zip; if (curRoute === "keeper") route("keeper", true); }
+  if (subsSig !== SUBSIG) { SUBSIG = subsSig; DB.subs = j.subs || []; if (curRoute === "keeper" && DB.admin === wasAdmin) route(curRoute, true); }
   let changed = false;
   if (rs !== RSIG) { RSIG = rs; applyOverrides(j.recipes || []); changed = true; }
   if (changed || DB.admin !== wasAdmin) {
     paintDyn();
-    const onEditor = /^(edit~|new|keeper)/.test(curRoute || "");
+    const onEditor = /^(edit~|new|keeper|review~)/.test(curRoute || "");
     if (curRoute !== null && (!onEditor || DB.admin !== wasAdmin)) route(curRoute, true);
   }
   const next = JSON.stringify(j.posts);
@@ -656,8 +771,10 @@ async function phpRefresh(force) {
 function paintAdmin() {
   const el = $("#adminbox"); if (!el || !PHP) return;
   document.querySelectorAll(".adm").forEach(x => { x.hidden = !DB.admin; });
+  const nsub = DB.admin ? (DB.subs || []).length : 0, el2 = $("#edlink");
+  if (el2) { const hh = "Edit Recipes" + (nsub ? '<span class="gl-count" title="Recipes waiting for approval">' + nsub + "</span>" : ""); if (el2.dataset.h !== hh) { el2.dataset.h = hh; el2.innerHTML = hh; } }
   let h = "";
-  if (DB.admin) h = 'Keeper mode is on. <a href="#new">Add a recipe</a> \u00b7 <a href="#keeper">Manage recipes</a> \u00b7 <button class="lk" data-act="adminout">Sign out</button>';
+  if (DB.admin) h = 'Keeper mode is on. <a href="#new">Add a recipe</a> \u00b7 <a href="#keeper">Manage recipes' + ((DB.subs || []).length ? " (" + DB.subs.length + " waiting)" : "") + '</a> \u00b7 <button class="lk" data-act="adminout">Sign out</button>';
   else if (!DB.adminReady) h = "";
   else if (adminOpen) h = '<form data-admin class="composer" style="max-width:20rem;margin-inline:auto"><label class="skip" for="apw">Keeper password</label><input class="ti" id="apw" type="password" autocomplete="current-password" placeholder="Keeper password"><button class="btn" type="submit">Sign in</button>' + (adminMsg ? '<span class="empty">' + esc(adminMsg) + "</span>" : "") + "</form>";
   else h = '<button class="lk" data-act="adminopen">Keeper sign-in</button>';
@@ -733,19 +850,44 @@ function editGate(t) {
   if (!DB.admin) return crumbsFor(t) + '<div class="panel"><h3>Keeper sign-in needed</h3><p>Only the cookbook’s keeper can add or change recipes. Scroll to the bottom of the page, choose “Keeper sign-in”, then come back here.</p></div>';
   return null;
 }
+const slugTaken = (cat, slug) => {
+  if (recBy[cat + "~" + slug]) return true;
+  const row = RROWS.find(x => x.cat === cat && x.slug === slug);
+  if (row) return !(row.deleted && row.r && row.r.to);   // a "moved away" note can be reclaimed when a recipe comes back
+  return !!inBase(cat, slug);
+};
 const inBase = (cat, slug) => { const b = BASE_D.cats.find(x => x.slug === cat); return b && b.recipes.find(r => r.slug === slug); };
+const dateOf = ts => { try { return new Date(ts).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }); } catch (e) { return ""; } };
+function pendingList() {
+  const subs = DB.subs || [];
+  if (!subs.length) return "";
+  return '<h3 style="margin-top:2rem">Waiting for your approval (' + subs.length + ")</h3><ul class=\"posts\">" + subs.map(x => {
+    const c = catBy[x.cat], t = (x.r && x.r.title) || "Untitled";
+    return '<li><span class="badge" style="margin:0 .6rem 0 0">New</span><b>' + esc(t) + '</b> <span class="when">' + esc(c ? c.name : x.cat) + (x.name ? " · from " + esc(x.name) : "") + " · " + esc(dateOf(x.ts)) + '</span><div class="pact"><a class="lk" href="#review~' + esc(x.id) + '">Review</a><button class="lk" data-ract="subrej" data-id="' + esc(x.id) + '">Reject</button></div></li>';
+  }).join("") + "</ul>";
+}
+function backupPanel() {
+  const b = DB.backups || [];
+  return '<section class="bkp"><h3>Backups</h3><p class="count" style="margin:0 0 .6rem">The site saves a copy of everything people have written (comments, discussions, notes, recipe edits) by itself about once a day, and keeps the last 14 copies on the server.' + (b.length ? " The latest is from " + esc(dayStr(new Date(b[0].ts).toISOString().slice(0, 10))) + "." : " The first copy is made soon after the next visit.") + '</p>' +
+    '<p><a class="btn ghost" href="api.php?action=backup"' + (DB.zip ? "" : ' title="Downloads the database"') + '>' + (DB.zip ? "Download a full backup (with photos)" : "Download a backup") + "</a></p>" +
+    '<p class="hint" style="margin:0">Save the downloaded file somewhere safe, like your computer or a cloud drive, once in a while. It is your protection if the host ever has a problem.</p></section>';
+}
 function keeperPage() {
   const g = editGate("Edit Recipes"); if (g) return g;
   const rows = RROWS.map(x => {
     const b = inBase(x.cat, x.slug), c = catBy[x.cat];
     if (!c) return "";
+    if (x.deleted && x.r && x.r.to) {
+      const dest = lookup(x.r.to);
+      return '<li><span class="badge" style="margin:0 .6rem 0 0">Moved</span><b>' + esc((x.r.title) || (b ? b.title : x.slug)) + '</b> <span class="when">' + esc(c.name) + " → " + esc(dest ? dest.catName : "another chapter") + "</span>" + (dest ? '<div class="pact"><a class="lk" href="#edit~' + esc(dest.cat) + "~" + esc(dest.slug) + '">Edit</a></div>' : "") + "</li>";
+    }
     const state = x.deleted ? "Deleted" : b ? "Edited" : "Added", title = x.deleted ? (b ? b.title : x.slug) : (x.r && x.r.title) || x.slug;
     const acts = x.deleted ? '<button class="lk" data-ract="revert" data-cat="' + esc(x.cat) + '" data-slug="' + esc(x.slug) + '">Restore</button>'
       : '<a class="lk" href="#edit~' + esc(x.cat) + "~" + esc(x.slug) + '">Edit</a>' + (b ? '<button class="lk" data-ract="revert" data-cat="' + esc(x.cat) + '" data-slug="' + esc(x.slug) + '">Undo my changes</button>' : "");
     return "<li><span class=\"badge\" style=\"margin:0 .6rem 0 0\">" + state + "</span><b>" + esc(title) + '</b> <span class="when">' + esc(c.name) + '</span><div class="pact">' + acts + "</div></li>";
   }).join("");
   return crumbsFor("Edit Recipes") + '<div class="chap"><h2 id="h">Edit Recipes</h2></div><p class="count">Add a recipe, or open any recipe and choose “Edit this recipe”. Changes show up on the site right away.</p>' +
-    '<p><a class="btn" href="#new">Add a recipe</a></p><h3 style="margin-top:2rem">Your changes</h3>' +
+    '<p><a class="btn" href="#new">Add a recipe</a></p>' + pendingList() + backupPanel() + '<h3 style="margin-top:2rem">Your changes</h3>' +
     (rows ? '<ul class="posts">' + rows + "</ul>" : '<p class="empty">No changes yet. Everything shown on the site is the original cookbook.</p>');
 }
 function fld(label, name, val, hint, kind) {
@@ -755,24 +897,32 @@ function fld(label, name, val, hint, kind) {
   return '<div class="fld"><label for="' + id + '">' + label + "</label>" + ctl + (hint ? '<small class="hint">' + hint + "</small>" : "") + "</div>";
 }
 function editorPage(mode, cat, slug) {
-  const isNew = mode === "new", t = isNew ? "Add a Recipe" : "Edit Recipe";
+  const review = mode === "review", isNew = mode === "new" || review, t = review ? "Review a Submission" : isNew ? "Add a Recipe" : "Edit Recipe";
   const g = editGate(t); if (g) return g;
-  let r = {}, c = catBy[cat] || D.cats[0];
+  let r = {}, c = catBy[cat] || D.cats[0], sub = null;
+  if (review) {
+    sub = (DB.subs || []).find(x => x.id === cat);
+    if (!sub) return crumbsFor(t) + '<p class="empty">That submission is no longer waiting. <a href="#keeper">Back to Edit Recipes</a></p>';
+    r = JSON.parse(JSON.stringify(sub.r || {})); c = catBy[sub.cat] || D.cats[0];
+  }
   if (!isNew) { r = recBy[cat + "~" + slug]; if (!r) return crumbsFor(t) + '<p class="empty">That recipe wasn’t found. <a href="#keeper">Back to Edit Recipes</a></p>'; c = catBy[cat]; }
-  const sel = isNew ? '<div class="fld"><label for="f-cat">Chapter</label><select class="ti" id="f-cat" name="cat">' + D.cats.map(x => '<option value="' + esc(x.slug) + '"' + (x.slug === c.slug ? " selected" : "") + ">" + esc(x.name) + "</option>").join("") + "</select></div>"
-    : '<p class="count" style="margin:0">Chapter: <b>' + esc(c.name) + "</b></p>";
+  const sel = '<div class="fld"><label for="f-cat">Chapter</label><select class="ti" id="f-cat" name="cat">' + D.cats.map(x => '<option value="' + esc(x.slug) + '"' + (x.slug === c.slug ? " selected" : "") + ">" + esc(x.name) + "</option>").join("") + "</select>" +
+    (isNew ? "" : '<small class="hint">To move this recipe to a different chapter, pick the new chapter here and save. Its comments, photo and menu links move with it.</small>') + "</div>";
   const diffSel = '<div class="fld"><label for="f-diff">Difficulty</label><select class="ti" id="f-diff" name="diff">' + [["0", "Not set"], ["1", "Easy"], ["2", "Moderate"], ["3", "Involved"]].map(o => '<option value="' + o[0] + '"' + (String(r.diff || 0) === o[0] ? " selected" : "") + ">" + o[1] + "</option>").join("") + "</select></div>";
   return crumbsFor(t) + '<div class="chap"><h2 id="h">' + t + '</h2></div>' +
-    '<form class="rform" data-rform data-mode="' + mode + '" data-cat="' + esc(c.slug) + '" data-slug="' + esc(slug || "") + '">' + sel +
+    (review ? '<p class="count" style="margin:0 0 1rem">Sent in by <b>' + esc(sub.name || "a family member") + "</b> on " + esc(dateOf(sub.ts)) + ". Fix anything you like, then save to add it to the book.</p>" : "") +
+    '<form class="rform" data-rform data-mode="' + (isNew ? "new" : "edit") + '"' + (review ? ' data-sub="' + esc(sub.id) + '"' : "") + ' data-img="' + esc(r.img || "") + '" data-cat="' + esc(c.slug) + '" data-slug="' + esc(slug || "") + '">' + sel +
     fld("Recipe title", "title", r.title, "") +
     '<div class="fgrid">' + fld("Submitted by", "by", r.by, "") + fld("Recipe from", "attr", r.attr, "") + "</div>" +
     fld("Short description", "desc", r.desc, "One or two sentences that tell people what makes it good.", "area") +
     '<div class="fgrid">' + fld("Prep time", "prep", r.prep, "") + fld("Cook time", "cook", r.cook, "") + fld("Total time", "total", r.total, "") + fld("Servings", "serves", r.serves, "") + diffSel + "</div>" +
     '<div class="fld"><label for="f-ing">Ingredients</label><textarea class="ta tall" id="f-ing" name="ing" rows="9">' + esc((r.ing || []).join("\n")) + '</textarea><small class="hint">One ingredient per line. To start a labeled group, begin the line with the label and a colon, like “Sauce: 2 tablespoons soy sauce”.</small></div>' +
     '<div class="fld"><label for="f-dir">Directions</label><textarea class="ta tall" id="f-dir" name="dir" rows="9">' + esc((r.dir || []).join("\n")) + '</textarea><small class="hint">One step per line. Step numbers are added for you.</small></div>' +
+    photoField(r.img || "") +
     fld("Special tools", "tools", r.tools, "Separate several with semicolons, like “Dutch oven; instant-read thermometer”.") +
     fld("Notes", "notes", r.notes, "Tips, substitutions, or where the recipe came from.", "area") +
     '<div class="rbar"><button class="btn" type="submit">Save recipe</button><button class="btn ghost" type="button" data-ract="preview">Preview</button><a class="lk" href="#' + (isNew ? "keeper" : esc(c.slug + "~" + slug)) + '">Cancel</a>' +
+    (review ? '<span class="rdelbox"><button class="lk danger" type="button" data-ract="subrej" data-id="' + esc(sub.id) + '" data-back="1">Reject this one</button></span>' : "") +
     (isNew ? "" : '<span class="rdelbox"><button class="lk" type="button" data-ract="rdel">Delete this recipe</button></span>') + '</div><p class="rmsg" role="status"></p></form><div id="rprev"></div>';
 }
 function collectRecipe(f) {
@@ -783,9 +933,10 @@ function collectRecipe(f) {
   const ing = lines(f.elements.ing.value).map(x => x.replace(/^[-•*]\s+/, "")), dir = lines(f.elements.dir.value).map(x => x.replace(/^\d+[.)]\s+/, ""));
   if (ing.length) r.ing = ing;
   if (dir.length) r.dir = dir;
+  if (f._photo) r.img = f._photo; else if (!f._rm && f.dataset.img) r.img = f.dataset.img;
   return r;
 }
-const errText = e => e.code === "keeper_only" ? "Your keeper sign-in ended. Sign in again at the bottom of the page." : e.code === "exists" ? "A recipe with that web address already exists. Try a different title." : e.code === "title" ? "Please give the recipe a title." : "Couldn’t save. Please try again.";
+const errText = e => e.code === "keeper_only" ? "Your keeper sign-in ended. Sign in again at the bottom of the page." : e.code === "exists" ? "A recipe with that web address already exists. Try a different title." : e.code === "title" ? "Please give the recipe a title." : e.code === "photo" ? "That photo couldn’t be used. Try a different one." : "Couldn’t save. Please try again.";
 document.addEventListener("submit", async e => {
   const f = e.target.closest && e.target.closest("form[data-rform]");
   if (!f) return;
@@ -793,10 +944,16 @@ document.addEventListener("submit", async e => {
   const rec = collectRecipe(f), msg = f.querySelector(".rmsg"), btn = f.querySelector('button[type="submit"]');
   if (!rec.title) { msg.textContent = "Please give the recipe a title."; return; }
   const isNew = f.dataset.mode === "new", cat = isNew ? f.elements.cat.value : f.dataset.cat;
-  let slug = f.dataset.slug;
-  if (isNew) { const b = slugify(rec.title); let n = 2; slug = b; while (recBy[cat + "~" + slug] || RROWS.some(x => x.cat === cat && x.slug === slug)) slug = b + "-" + (n++); }
+  const to = !isNew && f.elements.cat && f.elements.cat.value !== cat ? f.elements.cat.value : "";
+  let slug = f.dataset.slug, newSlug = "";
+  if (isNew) { const b = slugify(rec.title); let n = 2; slug = b; while (slugTaken(cat, slug)) slug = b + "-" + (n++); }
+  if (to) { let n = 2; newSlug = slug; while (slugTaken(to, newSlug)) newSlug = slug + "-" + (n++); }
   btn.disabled = true; msg.textContent = "Saving…";
-  try { await api({ action: "recipe_save", cat, slug, isNew, recipe: rec }); await phpRefresh(true); go(cat + "~" + slug); }
+  try {
+    if (rec.img && rec.img.startsWith("data:")) { msg.textContent = "Uploading photo…"; rec.img = (await api({ action: "photo_upload", image: rec.img })).img; f._photo = null; f.dataset.img = rec.img; }
+    if (to) { await api({ action: "recipe_move", cat, slug, to, newSlug, recipe: rec }); await phpRefresh(true); go(to + "~" + newSlug); }
+    else { await api({ action: "recipe_save", cat, slug, isNew, recipe: rec, sub: f.dataset.sub || undefined }); await phpRefresh(true); go(cat + "~" + slug); }
+  }
   catch (err) { msg.textContent = errText(err); btn.disabled = false; }
 });
 document.addEventListener("click", async e => {
@@ -804,7 +961,7 @@ document.addEventListener("click", async e => {
   if (!b) return;
   const act = b.dataset.ract, f = b.closest("form[data-rform]");
   if (act === "preview" && f) {
-    const d = collectRecipe(f); d.cat = f.dataset.mode === "new" ? f.elements.cat.value : f.dataset.cat; d.slug = "preview";
+    const d = collectRecipe(f); d.cat = f.elements.cat ? f.elements.cat.value : f.dataset.cat; d.slug = "preview";
     if (!d.title) { f.querySelector(".rmsg").textContent = "Add a title to see the preview."; return; }
     f.querySelector(".rmsg").textContent = "";
     $("#rprev").innerHTML = '<h3 style="margin:1.5rem 0 .75rem">Preview</h3>' + recipe(d, { preview: true }).replace(/ id="(h|ih|dh)"/g, "");
@@ -819,8 +976,64 @@ document.addEventListener("click", async e => {
     catch (err) { f.querySelector(".rmsg").textContent = errText(err); }
   } else if (act === "revert") {
     try { await api({ action: "recipe_revert", cat: b.dataset.cat, slug: b.dataset.slug }); await phpRefresh(true); route("keeper", true); } catch (err) {}
+  } else if (act === "photorm") {
+    const form = b.closest("form"); if (form) { form._photo = null; form._rm = true; const pb = form.querySelector(".pbox"); if (pb) pb.innerHTML = ""; const fi = form.querySelector("input[data-photo]"); if (fi) fi.value = ""; }
+    b.remove();
+  } else if (act === "subrej") {
+    const box = b.parentNode; box.dataset.orig = box.innerHTML; box.dataset.id = b.dataset.id; box.dataset.back = b.dataset.back || "";
+    box.innerHTML = 'Reject this recipe? <button class="lk danger" type="button" data-ract="subrejyes">Yes, reject</button> <button class="lk" type="button" data-ract="subrejno">Keep it</button>';
+  } else if (act === "subrejno") { const box = b.parentNode; box.innerHTML = box.dataset.orig; }
+  else if (act === "subrejyes") {
+    const box = b.parentNode;
+    try { await api({ action: "sub_reject", id: box.dataset.id }); await phpRefresh(true); if (box.dataset.back) go("keeper"); else route("keeper", true); } catch (err) { box.textContent = errText(err); }
   }
 });
+/* photos are shrunk in the browser before they are sent */
+function shrinkPhoto(file, maxSide, quality) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => {
+      try {
+        const k = Math.min(1, maxSide / Math.max(img.naturalWidth, img.naturalHeight)), w = Math.max(1, Math.round(img.naturalWidth * k)), h = Math.max(1, Math.round(img.naturalHeight * k));
+        const cv = document.createElement("canvas"); cv.width = w; cv.height = h;
+        const cx = cv.getContext("2d"); cx.fillStyle = "#fff"; cx.fillRect(0, 0, w, h); cx.drawImage(img, 0, 0, w, h);
+        URL.revokeObjectURL(url); resolve(cv.toDataURL("image/jpeg", quality));
+      } catch (e) { URL.revokeObjectURL(url); reject(e); }
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("img")); };
+    img.src = url;
+  });
+}
+document.addEventListener("change", async e => {
+  const inp = e.target.closest && e.target.closest("input[data-photo]");
+  if (!inp || !inp.files || !inp.files[0]) return;
+  const form = inp.closest("form"), pb = form.querySelector(".pbox"), msg = form.querySelector(".rmsg");
+  try {
+    const d = await shrinkPhoto(inp.files[0], 1400, 0.84);
+    form._photo = d; form._rm = false;
+    pb.innerHTML = '<img src="' + d + '" alt="">';
+    if (msg) msg.textContent = "";
+  } catch (err) { if (msg) msg.textContent = "That photo couldn’t be read. Try a different one (JPEG or PNG)."; inp.value = ""; }
+});
+/* public submission form */
+document.addEventListener("submit", async e => {
+  const f = e.target.closest && e.target.closest("form[data-subform]");
+  if (!f) return;
+  e.preventDefault();
+  const rec = collectRecipe(f), msg = f.querySelector(".rmsg"), btn = f.querySelector('button[type="submit"]');
+  if (!rec.title) { msg.textContent = "Please give the recipe a title."; return; }
+  if (!rec.ing || !rec.dir) { msg.textContent = "Please add the ingredients and the directions."; return; }
+  delete rec.img;
+  btn.disabled = true; msg.textContent = "Sending…";
+  try {
+    await api({ action: "sub_create", cat: f.elements.cat.value, recipe: rec, image: f._photo || "", website: f.elements.website.value });
+    f.hidden = true; const d = $("#subdone"); d.hidden = false; d.scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (err) {
+    msg.textContent = err.code === "slow_down" ? "You have sent a few already. Please try again a bit later." : err.code === "photo" ? "That photo couldn’t be used. Try a different one, or send without a photo." : err.code === "full" ? "The keeper’s list is full for now. Please try again later." : err.code === "links" ? "Please take out the web links and try again." : err.code === "incomplete" ? "Please add the ingredients and the directions." : "Couldn’t send. Please try again.";
+    btn.disabled = false;
+  }
+});
+document.addEventListener("click", e => { if (e.target.closest && e.target.closest("[data-again]")) { e.preventDefault(); route("submit", true); } });
 
 /* ---------- grocery list ---------- */
 const GL_KEY = "cookbook-grocery";
@@ -1025,7 +1238,7 @@ function glBtn(r, s) {
   const id = esc(r.cat + "~" + r.slug);
   if (s === "card") return '<button type="button" class="gl-card noprint" data-gl="' + id + '" data-gls="card" aria-pressed="false" aria-label="On grocery list: ' + esc(r.title) + '" title="Add to grocery list">+</button>';
   if (s === "link") return '<button type="button" class="lk noprint" data-gl="' + id + '" data-gls="link">Add to grocery list</button>';
-  return '<div class="rtools noprint"><button type="button" class="btn ghost" data-gl="' + id + '" data-gls="full">Add to grocery list</button><span class="gl-status" role="status"></span><a class="lk" href="#grocery" data-glview hidden>View grocery list</a></div>';
+  return '<div class="rtools noprint"><button type="button" class="btn ghost" data-gl="' + id + '" data-gls="full">Add to grocery list</button>' + favBtn(r, "full") + (MODE === "artifact" ? "" : '<button type="button" class="btn ghost" data-print>Print this recipe</button>') + '<span class="gl-status" role="status"></span><a class="lk" href="#grocery" data-glview hidden>View grocery list</a></div>';
 }
 function glPaint() {
   const n = GL.r.filter(e => recBy[e.id]).length, el = $("#glc");
@@ -1037,15 +1250,16 @@ function glPaint() {
     else {
       b.textContent = on ? "Remove from grocery list" : "Add to grocery list";
       const w = b.parentNode, st = w.querySelector(".gl-status"), v = w.querySelector("[data-glview]");
-      if (st) st.textContent = on ? "✓ On your grocery list" : "";
+      const ent = GL.r.find(e => e.id === b.dataset.gl);
+      if (st) st.textContent = on ? "✓ On your grocery list" + (ent && ent.x !== 1 ? " (" + GL_X[ent.x] + ")" : "") : "";
       if (v) v.hidden = !on;
     }
   });
 }
-function glToggle(id) {
+function glToggle(id, x) {
   if (!recBy[id]) return;
   const i = GL.r.findIndex(e => e.id === id);
-  if (i >= 0) GL.r.splice(i, 1); else GL.r.push({ id, x: 1 });
+  if (i >= 0) GL.r.splice(i, 1); else GL.r.push({ id, x: GL_X[x] ? x : 1 });
   glSave(); glPaint();
 }
 
@@ -1071,7 +1285,7 @@ function groceryPage() {
   return crumbs + head +
     '<p class="count" id="gl-count" role="status">' + glCountText(b, recs.length) + "</p>" +
     '<div class="gl-bar noprint"><button class="btn" type="button" data-glact="copy">Copy list</button>' + (MODE === "artifact" ? "" : '<button class="btn ghost" type="button" data-glact="print">Print</button>') +
-    '<button class="btn ghost" type="button" data-glact="uncheck">Uncheck all</button><span id="gl-clear"><button class="lk" type="button" data-glact="clear">Clear the whole list</button></span></div><p class="rmsg noprint" id="gl-msg" role="status"></p>' +
+    '<button class="btn ghost" type="button" data-glact="uncheck">Uncheck all</button>' + (PHP ? '<button class="btn ghost" type="button" data-glact="share">Send to my phone</button>' : "") + '<span id="gl-clear"><button class="lk" type="button" data-glact="clear">Clear the whole list</button></span></div><div id="gl-share" class="noprint"></div><p class="rmsg noprint" id="gl-msg" role="status"></p>' +
     '<article class="recipe"><div class="recipe-in"><div class="gl-wrap">' +
     '<section aria-labelledby="glr"><h3 id="glr">Recipes on your list</h3>' + (recs.length ? '<ul class="gl-recipes">' + recList + "</ul>" : '<p class="empty">No recipes yet.</p>') + '<p class="hint noprint" style="margin-top:.75rem">Change the batches to scale a recipe up or down, and the amounts update.</p></section>' +
     '<section aria-labelledby="gli"><h3 id="gli">Shopping list</h3>' + addForm + (aisles || '<p class="empty">Nothing to buy yet.</p>') + "</section></div>" +
@@ -1099,7 +1313,7 @@ function glRerender(focusSel) {
 document.addEventListener("click", async e => {
   const t = e.target.closest && e.target.closest("[data-gl],[data-glact],[data-gl-menu]");
   if (!t) return;
-  if (t.dataset.gl) { glToggle(t.dataset.gl); return; }
+  if (t.dataset.gl) { glToggle(t.dataset.gl, t.dataset.gls === "full" && t.dataset.gl === curRoute ? SCALE : 1); return; }
   if (t.dataset.glMenu) {
     const m = menuBy[t.dataset.glMenu]; if (!m) return;
     let added = 0, have = 0;
@@ -1115,6 +1329,11 @@ document.addEventListener("click", async e => {
   else if (act === "rmm") { GL.m = GL.m.filter(x => x.id !== t.dataset.id); delete GL.c["m:" + t.dataset.id]; glSave(); glRerender("#gl-new"); }
   else if (act === "uncheck") { GL.c = {}; glSave(); glRerender(); }
   else if (act === "print") { try { window.print(); } catch (err) {} }
+  else if (act === "share") { glShare(); }
+  else if (act === "copylink") { const ok = await glCopy(($("#gl-link") || {}).value || ""); const m = $("#gl-link-msg"); if (m) m.textContent = ok ? "Link copied." : "Couldn’t copy automatically. Select the link and copy it by hand."; }
+  else if (act === "sharelink") { try { await navigator.share({ title: "Grocery list", url: ($("#gl-link") || {}).value }); } catch (err) {} }
+  else if (act === "useshared") { glImport(t.dataset.code, false); }
+  else if (act === "mergeshared") { glImport(t.dataset.code, true); }
   else if (act === "copy") {
     const text = glPlain(), n = text.split("\n").filter(x => x.indexOf("- ") === 0).length;
     const ok = await glCopy(text);
@@ -1146,38 +1365,359 @@ document.addEventListener("submit", e => {
 });
 window.addEventListener("storage", e => { if (e.key === GL_KEY) { GL = glLoad(); glPaint(); if (curRoute === "grocery") route("grocery", true); } });
 
+
+/* ---------- favorites ---------- */
+const FAV_KEY = "cookbook-favs";
+let FAV = (() => { try { const a = JSON.parse(localStorage.getItem(FAV_KEY) || "[]"); return Array.isArray(a) ? a.filter(x => typeof x === "string") : []; } catch (e) { return []; } })();
+function favSave() { try { localStorage.setItem(FAV_KEY, JSON.stringify(FAV)); } catch (e) {} }
+const favHas = id => FAV.indexOf(id) >= 0;
+function favBtn(r, s) {
+  const key = r.cat + "~" + r.slug, id = esc(key), on = favHas(key);
+  if (s === "card") return '<button type="button" class="fav-card noprint" data-fav="' + id + '" data-favs="card" aria-pressed="' + on + '" aria-label="Favorite: ' + esc(r.title) + '" title="' + (on ? "One of your favorites. Tap to remove." : "Save to my favorites") + '">' + (on ? "♥" : "♡") + "</button>";
+  return '<button type="button" class="btn ghost fav-btn" data-fav="' + id + '" data-favs="full" aria-pressed="' + on + '">' + (on ? "♥ In my favorites" : "♡ Save to favorites") + "</button>";
+}
+function favPaint() {
+  document.querySelectorAll("[data-fav]").forEach(b => {
+    const on = favHas(b.dataset.fav);
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+    if (b.dataset.favs === "card") { b.textContent = on ? "♥" : "♡"; b.title = on ? "One of your favorites. Tap to remove." : "Save to my favorites"; }
+    else b.textContent = on ? "♥ In my favorites" : "♡ Save to favorites";
+  });
+}
+function favToggle(id) {
+  const i = FAV.indexOf(id);
+  if (i >= 0) FAV.splice(i, 1); else FAV.unshift(id);
+  favSave(); favPaint();
+  if (curRoute === "favorites") route("favorites", true);
+}
+function favoritesPage() {
+  const seen = new Set(), list = [];
+  FAV.forEach(id => { const r = lookup(id); if (r && !seen.has(r)) { seen.add(r); list.push(r); } });
+  list.sort((a, b) => a._t.localeCompare(b._t));
+  return '<p class="crumbs"><a href="#">Contents</a><span aria-hidden="true">/</span>My Favorites</p>' +
+    '<div class="chap"><h2 id="h">My Favorites</h2></div>' +
+    (list.length
+      ? '<p class="count">' + list.length + (list.length === 1 ? " recipe" : " recipes") + ' you cook again and again. They are kept in this browser, on this device.</p><ul class="grid">' + list.map(cardHtml).join("") + "</ul>"
+      : '<p class="empty">Nothing here yet. Tap the ♡ on any recipe to keep it close. Your favorites are saved in this browser, on this device, so they are yours alone.</p>');
+}
+window.addEventListener("storage", e => { if (e.key === FAV_KEY) { try { FAV = JSON.parse(e.newValue || "[]"); } catch (x) { FAV = []; } favPaint(); if (curRoute === "favorites") route("favorites", true); } });
+document.addEventListener("click", e => {
+  const b = e.target.closest && e.target.closest("[data-fav]");
+  if (b) { e.preventDefault(); favToggle(b.dataset.fav); return; }
+  const p = e.target.closest && e.target.closest("[data-print]");
+  if (p) { try { window.print(); } catch (err) {} }
+});
+
+/* ---------- scaling a recipe ---------- */
+let SCALE = 1;
+const SC_STEPS = [[0.5, "½×"], [1, "1×"], [2, "2×"], [3, "3×"], [4, "4×"]];
+const SC_NOUNS = "egg onion potato tomato carrot apple lemon lime banana orange clove stalk rib breast thigh tortilla bun roll biscuit yolk white shallot pear peach avocado cucumber sausage patty fillet steak chop drumstick wing leg cookie".split(" ");
+const scPlural = w => /(o)$/.test(w) ? w + "es" : w + "s";
+function scNounFix(text, up) {
+  const head = text.split(/[,(]| - | plus /)[0], words = head.split(" "), last = words[words.length - 1].toLowerCase().replace(/[^a-z]/g, "");
+  let base = null;
+  if (SC_NOUNS.indexOf(last) >= 0 && up) base = last;
+  else if (!up) for (const n of SC_NOUNS) if (scPlural(n) === last) base = n;
+  if (!base) return text;
+  const from = up ? base : scPlural(base), to = up ? scPlural(base) : base;
+  const idx = text.toLowerCase().indexOf(head.toLowerCase()), hs = idx < 0 ? 0 : idx, hl = head.length;
+  const hd = text.slice(hs, hs + hl), re = new RegExp(from + "\\W*$", "i");
+  const m = hd.match(new RegExp("(" + from + ")(\\W*)$", "i"));
+  return m ? text.slice(0, hs) + hd.slice(0, m.index) + (m[1][0] === m[1][0].toUpperCase() ? to[0].toUpperCase() + to.slice(1) : to) + m[2] + text.slice(hs + hl) : text;
+}
+const SC_MEASURE = { tsp: 1, tbsp: 3, cup: 48 };
+const SC_ABBR = /^(tsp|tbsp|oz|lb|lbs|qt|pt|gal|kg|ml|tbs|pkg|pkgs|g|l|c)\.?$/i;
+function scNums(str, k) { return str.replace(/\d+\s+\d+\/\d+|\d+\/\d+|\d*\.\d+|\d+/g, n => glFmt(glNumVal(n) * k)); }
+function scaleLine(t, k) {
+  if (k === 1) return t;
+  const s = glNorm(t), m = s.match(GL_QRE);
+  if (!m) return t;
+  let rest = m[3];
+  if (!rest || /^[-–%]/.test(rest)) return t;
+  const a = glNumVal(m[1]), b = m[2] ? glNumVal(m[2]) : null;
+  if (!isFinite(a) || a <= 0 || (b !== null && (!isFinite(b) || b <= 0))) return t;
+  let pre = "";
+  const pm = rest.match(/^(\([^)]*\))\s*(.*)$/);
+  if (pm) { pre = pm[1] + " "; rest = pm[2]; }
+  const um = rest.match(/^([A-Za-z]+\.?)(?![A-Za-z])\s*(.*)$/), wd = um ? um[1] : "", canon = wd ? GL_UNIT[wd.toLowerCase()] : "";
+  let after = um && canon ? um[2] : rest;
+  if (canon && b === null && !pre && SC_MEASURE[canon]) {
+    const T = a * SC_MEASURE[canon] * k;
+    after = after.replace(/^\(([^)]*)\)/, (x, inner) => "(" + scNouns(scNums(inner, k)) + ")");
+    if (T < 0.1) return "a pinch of " + after.replace(/^of\s+/i, "");
+    return (glVol(T) + " " + after).trim();
+  }
+  const na = a * k, nb = b === null ? null : b * k, top = nb === null ? na : nb;
+  if (na < 0.05) return t;
+  const num = glFmt(na) + (nb === null ? "" : "-" + glFmt(nb));
+  if (canon) {
+    let w = wd;
+    if (!SC_ABBR.test(w)) {
+      if (top > 1.0001 && !/s\.?$/i.test(w)) w = /(ch|sh|x)$/i.test(w) ? w + "es" : w + "s";
+      else if (top <= 1.0001 && /^(cups|cans|cloves|packages|sticks|slices|pounds|ounces|teaspoons|tablespoons|jars|bottles|boxes|bags|packets|bunches|heads|pieces|pinches)$/i.test(w)) w = w.replace(/(ch|sh|x)es$/i, "$1").replace(/s$/i, "");
+    }
+    if (/^(lb|oz|g|kg|ml|l|qt|pt|gal)\.?$/i.test(canon) || /^(pound|ounce|quart|pint|gallon|gram|kilogram|liter|litre|milliliter)/i.test(canon)) after = after.replace(/^\(([^)]*)\)/, (x, inner) => "(" + scNums(inner, k) + ")");
+    return (num + " " + pre + w + " " + after).replace(/\s+$/, "");
+  }
+  const body = scNounFix(pre + rest, top > 1.0001);
+  return (num + " " + body).trim();
+}
+function scNouns(x) { return x.replace(/\b(stick|sticks)\b/g, w => w); }
+function scaleServes(v, k) {
+  if (k === 1) return v;
+  const m = String(v).match(/^(\d+(?:\.\d+)?)(?:(\s*(?:-|–|to)\s*)(\d+(?:\.\d+)?))?(.*)$/);
+  if (!m) return v;
+  const f = x => String(Math.max(1, Math.round(parseFloat(x) * k)));
+  return f(m[1]) + (m[3] ? m[2] + f(m[3]) : "") + m[4];
+}
+function scalerHtml(r) {
+  const can = (r.ing || []).some(l => scaleLine(l, 2) !== l);
+  if (!can) return "";
+  return '<div class="scaler noprint" role="group" aria-label="Scale this recipe"><span class="lbl">Make</span>' +
+    SC_STEPS.map(x => '<button type="button" data-scale="' + x[0] + '" aria-pressed="' + (x[0] === SCALE) + '">' + x[1] + "</button>").join("") + '</div><p class="scale-note" hidden></p>';
+}
+function paintScale() {
+  document.querySelectorAll("[data-o]").forEach(el => { const t = scaleLine(el.dataset.o, SCALE); if (el.textContent !== t) el.textContent = t; });
+  document.querySelectorAll("[data-sv]").forEach(el => { const t = scaleServes(el.dataset.sv, SCALE); if (el.textContent !== t) el.textContent = t; });
+  document.querySelectorAll("[data-scale]").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.scale === SCALE)));
+  const n = $(".scale-note");
+  if (n) {
+    n.hidden = SCALE === 1;
+    n.textContent = SCALE === 1 ? "" : "Amounts below are for " + (SC_STEPS.find(x => x[0] === SCALE) || [0, SCALE + "×"])[1] + " the recipe. Pan sizes and cooking times may need adjusting.";
+  }
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest && e.target.closest("[data-scale]");
+  if (!b) return;
+  SCALE = +b.dataset.scale; paintScale();
+});
+
+/* ---------- search filters ---------- */
+const FIL0 = { cat: "", time: 0, diff: 0, photo: false, fav: false, use: "", skip: "" };
+state.f = Object.assign({}, FIL0);
+state.s = Object.assign({}, FIL0);
+state.sPick = false;
+const onSurprise = () => curRoute === "surprise";
+function parseMins(str) {
+  if (!str) return null;
+  let s = glNorm(String(str).toLowerCase()).replace(/(\d)\+/g, "$1");
+  if (/overnight/.test(s)) return 720;
+  s = s.split(/\bplus\b/)[0];
+  const re = /(\d+\s+\d+\/\d+|\d+\/\d+|\d*\.\d+|\d+)(?:\s*(?:-|–|to)\s*(\d+\s+\d+\/\d+|\d+\/\d+|\d*\.\d+|\d+))?\s*(days?|hours?|hrs?|h|minutes?|mins?|m)\b/g;
+  let m, tot = 0, got = false;
+  while ((m = re.exec(s))) {
+    const v = glNumVal(m[2] || m[1]), u = m[3][0];
+    tot += v * (u === "d" ? 1440 : u === "h" ? 60 : 1); got = true;
+  }
+  return got ? Math.round(tot) : null;
+}
+function recMins(r) {
+  const t = parseMins(r.total);
+  if (t !== null) return t;
+  const p = parseMins(r.prep), c = parseMins(r.cook);
+  return p === null && c === null ? null : (p || 0) + (c || 0);
+}
+const fTerms = s => String(s || "").toLowerCase().split(/,|;|\band\b|&/).map(x => x.trim()).filter(Boolean);
+const fHas = (text, t) => text.indexOf(t) >= 0 || (t.length > 3 && text.indexOf(t.replace(/(es|s)$/, "")) >= 0);
+function filtersActive(f) { f = f || state.f; return !!(f.cat || f.time || f.diff || f.photo || f.fav || fTerms(f.use).length || fTerms(f.skip).length); }
+function passFilters(r, f) {
+  f = f || state.f;
+  if (f.cat && r.cat !== f.cat) return false;
+  if (f.diff && r.diff !== f.diff) return false;
+  if (f.photo && !r.img) return false;
+  if (f.fav && !favHas(r.cat + "~" + r.slug)) return false;
+  if (f.time) { const m = recMins(r); if (m === null || m > f.time) return false; }
+  const ing = (r.ing || []).join(" ").toLowerCase();
+  if (fTerms(f.use).some(t => !fHas(ing, t))) return false;
+  if (fTerms(f.skip).some(t => fHas(ing, t))) return false;
+  return true;
+}
+function filterPanel(f) {
+  f = f || state.f;
+  const o = (v, cur, label) => '<option value="' + esc(v) + '"' + (String(cur) === String(v) ? " selected" : "") + ">" + esc(label) + "</option>";
+  return '<div class="sfil noprint" role="group" aria-label="Narrow the results">' +
+    '<div><label for="sf-cat">Chapter</label><select class="ti" id="sf-cat" data-sf="cat">' + o("", f.cat, "All chapters") + D.cats.map(c => o(c.slug, f.cat, c.name)).join("") + "</select></div>" +
+    '<div><label for="sf-time">Ready in</label><select class="ti" id="sf-time" data-sf="time">' + [[0, "Any time"], [30, "30 minutes or less"], [60, "1 hour or less"], [120, "2 hours or less"]].map(x => o(x[0], f.time, x[1])).join("") + "</select></div>" +
+    '<div><label for="sf-diff">Difficulty</label><select class="ti" id="sf-diff" data-sf="diff">' + [[0, "Any"], [1, "Easy"], [2, "Moderate"], [3, "Involved"]].map(x => o(x[0], f.diff, x[1])).join("") + "</select></div>" +
+    '<div><label for="sf-use">Use up (commas between)</label><input class="ti" id="sf-use" data-sf="use" value="' + esc(f.use) + '" placeholder="chicken, rice" autocomplete="off"></div>' +
+    '<div><label for="sf-skip">Leave out</label><input class="ti" id="sf-skip" data-sf="skip" value="' + esc(f.skip) + '" placeholder="nuts, mushrooms" autocomplete="off"></div>' +
+    '<div class="full"><label class="chk"><input type="checkbox" data-sf="photo"' + (f.photo ? " checked" : "") + '> Has a photo</label><label class="chk"><input type="checkbox" data-sf="fav"' + (f.fav ? " checked" : "") + '> Only my favorites</label><button type="button" class="lk" data-sfclear>Clear filters</button></div></div>';
+}
+document.addEventListener("input", sfEvent);
+document.addEventListener("change", sfEvent);
+function sfEvent(e) {
+  const el = e.target.closest && e.target.closest("[data-sf]");
+  if (!el) return;
+  const k = el.dataset.sf;
+  const tgt = onSurprise() ? state.s : state.f;
+  tgt[k] = el.type === "checkbox" ? el.checked : (k === "time" || k === "diff") ? +el.value : el.value;
+  const box = $("#sres"); if (box) box.innerHTML = onSurprise() ? surpriseResults() : searchResults();
+}
+document.addEventListener("click", e => {
+  if (!(e.target.closest && e.target.closest("[data-sfclear]"))) return;
+  if (onSurprise()) { state.s = Object.assign({}, FIL0); route("surprise", true); }
+  else { state.f = Object.assign({}, FIL0); route("search", true); }
+});
+
+/* ---------- surprise me ---------- */
+const surpriseHits = () => all.filter(r => passFilters(r, state.s));
+function surprisePage() {
+  return '<p class="crumbs"><a href="#">Contents</a><span aria-hidden="true">/</span>Surprise Me</p><div class="chap"><h2 id="h">Surprise Me</h2></div>' +
+    '<p class="count">Not sure what to cook? Narrow it down if you like, or leave everything open, and the book picks one for you.</p>' +
+    filterPanel(state.s) + '<div id="sres">' + surpriseResults() + "</div>";
+}
+function surpriseResults() {
+  const n = surpriseHits().length;
+  return '<p class="count" role="status">' + (n ? n + (n === 1 ? " recipe fits" : " recipes fit") + (filtersActive(state.s) ? " your choices." : ".") : "Nothing fits those choices. Try loosening one.") + '</p>' +
+    '<p><button class="btn" type="button" data-surprise' + (n ? "" : " disabled") + ">Surprise me!</button></p>";
+}
+function surprisePick() {
+  const hits = surpriseHits(); if (!hits.length) return;
+  let r = hits[Math.floor(Math.random() * hits.length)];
+  if (hits.length > 1) { const cur = curRoute; let t = 0; while (rlink(r).slice(1) === cur && t++ < 8) r = hits[Math.floor(Math.random() * hits.length)]; }
+  state.sPick = true; go(r.cat + "~" + r.slug);
+}
+document.addEventListener("click", e => { if (e.target.closest && e.target.closest("[data-surprise]")) { e.preventDefault(); surprisePick(); } });
+
+/* ---------- "I made this" notes ---------- */
+const madeTok = () => { try { return JSON.parse(localStorage.getItem("cookbook-madetok") || "{}"); } catch (e) { return {}; } };
+const todayStr = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
+const dayStr = v => { const m = String(v || "").match(/^(\d{4})-(\d{2})-(\d{2})$/); if (!m) return ""; try { return new Date(+m[1], +m[2] - 1, +m[3]).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }); } catch (e) { return v; } };
+function madeSection(key) {
+  if (!PHP) return "";
+  let nm = ""; try { nm = localStorage.getItem("cookbook-name") || ""; } catch (e) {}
+  return '<section class="made noprint" aria-labelledby="mdh"><h3 id="mdh">Made it? <span id="md-n"></span></h3><ul class="mlist" id="md-list" data-target="' + esc(key) + '"></ul>' +
+    '<details class="mform"><summary class="btn ghost">I made this</summary><form data-madeform data-target="' + esc(key) + '">' +
+    '<p class="hint" style="margin:0">Tell the family you cooked it, with a photo or a note on how it turned out.</p>' +
+    '<div class="fgrid"><div class="fld"><label for="md-name">Your name</label><input class="ti" id="md-name" name="name" maxlength="40" autocomplete="name" value="' + esc(nm) + '"></div>' +
+    '<div class="fld"><label for="md-on">Date you made it</label><input class="ti" id="md-on" name="on" type="date" max="' + todayStr() + '" value="' + todayStr() + '"></div></div>' +
+    '<div class="fld"><label for="md-note">A note (optional)</label><textarea class="ta" id="md-note" name="note" rows="3" maxlength="600" placeholder="Added extra garlic, the kids loved it…"></textarea></div>' +
+    '<div class="fld"><label for="f-photo">Photo (optional)</label><div class="pbox"></div><div class="pfile"><input type="file" id="f-photo" accept="image/*" data-photo></div></div>' +
+    '<div class="hpt" aria-hidden="true"><label>Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label></div>' +
+    '<div class="rbar"><button class="btn" type="submit">Add to the book</button></div><p class="rmsg" role="status"></p></form></details></section>';
+}
+let madeConfirm = null;
+function paintMade() {
+  const el = $("#md-list"); if (!el) return;
+  const arr = (DB.made || []).filter(x => x.target === el.dataset.target || canonId(x.target) === el.dataset.target);
+  const n = $("#md-n"); if (n) n.textContent = arr.length ? "(" + arr.length + ")" : "";
+  const tok = madeTok();
+  const html = arr.map(x => {
+    const can = DB.admin || !!tok[x.id];
+    const acts = !can ? "" : madeConfirm === x.id
+      ? '<div class="pact">Delete this note? <button class="lk danger" data-madedel="' + esc(x.id) + '" data-yes="1">Yes, delete</button><button class="lk" data-madedel="" data-no="1">Keep it</button></div>'
+      : '<div class="pact"><button class="lk" data-madedel="' + esc(x.id) + '">Delete</button></div>';
+    return '<li' + (x.img ? ' class="has-img"' : "") + ">" + (x.img ? '<a href="' + esc(x.img) + '" target="_blank" rel="noopener"><img src="' + esc(x.img) + '" alt="Photo from ' + esc(x.name) + '" loading="lazy"></a>' : "") +
+      '<div><span class="who">' + esc(x.name) + '</span><span class="when">made it ' + esc(dayStr(x.on)) + "</span>" + (x.note ? "<p>" + esc(x.note) + "</p>" : "") + acts + "</div></li>";
+  }).join("");
+  const out = html || '<li class="empty" style="display:block">Nobody has added a note yet. Be the first to say you made it.</li>';
+  if (el.dataset.h !== out) { el.dataset.h = out; el.innerHTML = out; }
+}
+document.addEventListener("submit", async e => {
+  const f = e.target.closest && e.target.closest("form[data-madeform]");
+  if (!f) return;
+  e.preventDefault();
+  const msg = f.querySelector(".rmsg"), btn = f.querySelector('button[type="submit"]');
+  const name = f.elements.name.value.trim();
+  btn.disabled = true; msg.textContent = "Saving…";
+  try {
+    const j = await api({ action: "made_create", target: f.dataset.target, name, note: f.elements.note.value.trim(), on: f.elements.on.value, image: f._photo || "", website: f.elements.website.value });
+    try { localStorage.setItem("cookbook-name", name); const t = madeTok(); if (j.id) t[j.id] = j.token; localStorage.setItem("cookbook-madetok", JSON.stringify(t)); } catch (x) {}
+    f._photo = null; f.elements.note.value = ""; const pb = f.querySelector(".pbox"); if (pb) pb.innerHTML = ""; const fi = f.querySelector("input[data-photo]"); if (fi) fi.value = "";
+    msg.textContent = "Thank you! It’s in the book."; f.closest("details").open = false;
+    await phpRefresh(true);
+  } catch (err) {
+    msg.textContent = err.code === "slow_down" ? "That’s a lot at once. Please try again a bit later." : err.code === "photo" ? "That photo couldn’t be used. Try a different one." : err.code === "links" ? "Please take out the web link and try again." : "Couldn’t save. Please try again.";
+  }
+  btn.disabled = false;
+});
+document.addEventListener("click", async e => {
+  const b = e.target.closest && e.target.closest("[data-madedel]");
+  if (!b) return;
+  if (b.dataset.no !== undefined) { madeConfirm = null; paintMade(); return; }
+  if (!b.dataset.yes) { madeConfirm = b.dataset.madedel; paintMade(); return; }
+  const id = b.dataset.madedel;
+  try { await api({ action: "made_delete", id, token: madeTok()[id] || "" }); madeConfirm = null; await phpRefresh(true); } catch (err) { madeConfirm = null; paintMade(); }
+});
+
+/* ---------- send the grocery list to a phone ---------- */
+const SH = {};
+function glSharePayload() { return { r: GL.r.filter(e => recBy[e.id]).map(e => [e.id, e.x]), c: Object.keys(GL.c), m: GL.m.map(x => ({ id: x.id, t: x.t })) }; }
+async function glShare() {
+  const box = $("#gl-share"); if (!box) return;
+  box.innerHTML = '<p>Making a link…</p>';
+  try {
+    const j = await api({ action: "share_create", list: glSharePayload() });
+    const url = location.href.split("#")[0] + "#list~" + j.code;
+    box.innerHTML = '<div class="sharebox"><p><b>Open this link on your phone</b> (text or email it to yourself). It brings over the list as it is right now, and works for about two months.</p><div class="row"><input class="ti" id="gl-link" readonly value="' + esc(url) + '" aria-label="Link to this list"><button class="btn" type="button" data-glact="copylink">Copy link</button>' + (navigator.share ? '<button class="btn ghost" type="button" data-glact="sharelink">Share…</button>' : "") + '</div><p id="gl-link-msg" role="status"></p></div>';
+  } catch (err) { box.innerHTML = '<p class="rmsg">' + (err.code === "slow_down" ? "You have made a few links already. Please try again a bit later." : "Couldn’t make the link. Please try again.") + "</p>"; }
+}
+function sharedPage(code) {
+  return '<p class="crumbs"><a href="#">Contents</a><span aria-hidden="true">/</span><a href="#grocery">Grocery List</a></p><div class="chap"><h2 id="h">A Grocery List Was Sent to You</h2></div><div id="shared" data-code="' + esc(code) + '"><p class="empty">Loading…</p></div>';
+}
+async function loadShared() {
+  const el = $("#shared"); if (!el) return;
+  const code = el.dataset.code;
+  if (!PHP) { el.innerHTML = '<p class="empty">Shared lists work on the main cookbook website.</p>'; return; }
+  try {
+    if (!SH[code]) { const r = await fetch("api.php?action=share&code=" + encodeURIComponent(code), { cache: "no-store" }); if (!r.ok) throw new Error("x"); SH[code] = (await r.json()).list; }
+  } catch (e) { el.innerHTML = '<p class="empty">That list link has expired or isn’t right. Ask for a new one.</p>'; return; }
+  const l = SH[code], items = (l.r || []).map(x => ({ r: lookup(x[0]), x: x[1] })).filter(x => x.r);
+  const mine = GL.r.length || GL.m.length;
+  el.innerHTML = '<p class="count">' + items.length + (items.length === 1 ? " recipe" : " recipes") + (l.m && l.m.length ? " and " + l.m.length + (l.m.length === 1 ? " extra item" : " extra items") : "") + '.</p>' +
+    (items.length ? '<ul class="gl-recipes" style="max-width:34rem">' + items.map(x => "<li><span>" + esc(x.r.title) + "</span><small>" + esc(GL_X[x.x] || "") + "</small></li>").join("") + "</ul>" : "") +
+    '<div class="rtools" style="margin-top:1rem"><button class="btn" type="button" data-glact="useshared" data-code="' + esc(code) + '">' + (mine ? "Use this list (replaces mine)" : "Use this list") + "</button>" + (mine ? '<button class="btn ghost" type="button" data-glact="mergeshared" data-code="' + esc(code) + '">Add to my list</button>' : "") + "</div>";
+}
+function glImport(code, merge) {
+  const l = SH[code]; if (!l) return;
+  const base = merge ? GL : { r: [], c: {}, m: [] };
+  (l.r || []).forEach(x => { const id = canonId(x[0]); if (recBy[id] && !base.r.some(e => e.id === id)) base.r.push({ id, x: GL_X[x[1]] ? x[1] : 1 }); });
+  (l.m || []).forEach(m => { if (!base.m.some(e => e.t === m.t)) base.m.push({ id: m.id || Date.now().toString(36), t: m.t }); });
+  (l.c || []).forEach(k => { base.c[k] = 1; });
+  GL = base; glSave(); go("grocery");
+}
+
 /* ---------- router ---------- */
 function resolve(h) {
   h = decodeURIComponent(h || "");
   if (!h) return { v: home(), nav: "home", title: "" };
-  if (h === "search") return { v: search(), nav: "", title: "Search" };
+  if (h === "search") return { v: search(), nav: "search", title: "Search" };
   if (h === "grocery") return { v: groceryPage(), nav: "grocery", title: "Grocery List" };
+  if (h.startsWith("list~")) return { v: sharedPage(h.slice(5)), nav: "grocery", title: "Shared Grocery List" };
+  if (h === "favorites") return { v: favoritesPage(), nav: "favorites", title: "My Favorites" };
   if (h === "menus") return { v: menusIndex(), nav: "menus", title: "Favorite Menus" };
   if (!STANDALONE && h === "discuss") return { v: discussIndex(), nav: "discuss", title: "Discussion" };
   if (!STANDALONE && h.startsWith("discuss~")) return { v: threadPage(h.slice(8)), nav: "discuss", title: "Discussion" };
   if (h === "keeper") return { v: keeperPage(), nav: "keeper", title: "Edit Recipes" };
   if (h === "new" || h.startsWith("new~")) return { v: editorPage("new", h.slice(4)), nav: "keeper", title: "Add a Recipe" };
+  if (h.startsWith("review~")) return { v: editorPage("review", h.slice(7)), nav: "keeper", title: "Review Submission" };
   if (h.startsWith("edit~")) { const p = h.slice(5).split("~"); return { v: editorPage("edit", p[0], p[1]), nav: "keeper", title: "Edit Recipe" }; }
   if (h === "submit") return { v: submit(), nav: "submit", title: "Share a Recipe" };
-  if (h === "surprise") { const r = all[Math.floor(Math.random() * all.length)]; return resolve(r.cat + "~" + r.slug); }
+  if (h === "surprise") return { v: surprisePage(), nav: "surprise", title: "Surprise Me" };
   if (h.startsWith("menu~") && menuBy[h.slice(5)]) { const m = menuBy[h.slice(5)]; return { v: menuPage(m), nav: "menus", title: m.title }; }
   if (catBy[h]) return { v: category(catBy[h]), nav: "", title: catBy[h].name };
   if (recBy[h]) return { v: recipe(recBy[h]), nav: "", title: recBy[h].title, canon: h };
+  const mv = canonId(h);
+  if (mv !== h && recBy[mv]) return { v: recipe(recBy[mv]), nav: "", title: recBy[mv].title, canon: mv };
   return { v: home(), nav: "home", title: "" };
 }
 function route(h, quiet) {
   const res = resolve(h);
+  if ((res.canon || h) !== curRoute) SCALE = 1;
+  if (!res.canon && h !== "surprise") state.sPick = false;
   curRoute = res.canon || h;
   $("#view").innerHTML = res.v;
   paintDyn();
   glPaint();
+  paintScale();
+  paintMade();
+  if ($("#shared")) loadShared();
   document.querySelectorAll("[data-nav]").forEach(a => a.getAttribute("data-nav") === res.nav ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
   document.title = res.title ? res.title + " · Family Cookbook" : "Family Cookbook";
   if (res.canon && location.hash.slice(1) !== res.canon) { try { location.hash = res.canon; } catch (e) {} }
   if (!quiet && h !== "search") { window.scrollTo(0, 0); const hd = $("#h"); if (hd) { hd.setAttribute("tabindex", "-1"); hd.focus({ preventScroll: true }); } }
 }
 function go(h) {
-  if (h === "surprise") { route("surprise"); return; }
   try { if (location.hash.slice(1) !== h) location.hash = h; } catch (e) {}
   route(h);
 }

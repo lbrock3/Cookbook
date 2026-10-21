@@ -1,0 +1,5 @@
+# Never commit your real password, the live comment/recipe database, or uploaded photos
+config.php
+data/
+photos/
+.DS_Store
