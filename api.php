@@ -375,6 +375,23 @@ if ($action === 'share_create') {
     out(500, ['error' => 'db_error']);
 }
 
+
+// Email the keeper when a recipe is submitted. Best effort: a mail problem never blocks the submission.
+function notifyKeeper(string $title, string $by, string $cat): void {
+    global $NOTIFY_EMAIL;
+    $to = isset($NOTIFY_EMAIL) && $NOTIFY_EMAIL !== '' ? $NOTIFY_EMAIL : 'brocks@gmail.com';
+    if (!filter_var($to, FILTER_VALIDATE_EMAIL)) return;
+    $host = preg_replace('/[^a-z0-9.-]/i', '', (string)($_SERVER['HTTP_HOST'] ?? 'localhost'));
+    $host = preg_replace('/^www\./i', '', $host);
+    $one = function (string $t): string { return trim(preg_replace('/[\r\n]+/', ' ', $t)); };
+    $title = $one($title); $by = $one($by) ?: 'Someone'; $cat = $one($cat);
+    $subject = 'New recipe waiting: ' . mb_substr($title, 0, 80);
+    $body = "$by submitted a recipe for the Family Cookbook.\n\nTitle: $title\nChapter: $cat\n\n"
+          . "Sign in as keeper and open Edit Recipes to approve or reject it:\nhttps://$host/#keeper\n";
+    $headers = "From: Family Cookbook <noreply@$host>\r\nContent-Type: text/plain; charset=UTF-8";
+    @mail($to, '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, $headers);
+}
+
 if ($action === 'sub_create') {
     if (!empty($in['website'])) out(200, ['ok' => true]);               // honeypot
     $cat = (string)($in['cat'] ?? '');
@@ -395,6 +412,7 @@ if ($action === 'sub_create') {
     mark($db, $ip, 'sub');
     $name = clean((string)($r['by'] ?? ''), 80, false);
     $db->prepare('INSERT INTO subs(cat,name,data,ts) VALUES(?,?,?,?)')->execute([$cat, $name, json_encode($r, JSON_UNESCAPED_UNICODE), time()]);
+    notifyKeeper((string)($r['title'] ?? ''), $name, $cat);
     out(200, ['ok' => true]);
 }
 
