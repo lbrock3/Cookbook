@@ -443,6 +443,8 @@ function applyOverrides(rows) {
     base.forEach(b => { if (!gone.has(b.slug)) list.push(JSON.parse(JSON.stringify(edits[b.slug] || b))); });
     mine.filter(x => !x.deleted && x.r && !base.some(b => b.slug === x.slug)).forEach(x => list.push(JSON.parse(JSON.stringify(x.r))));
     list.forEach(r => { r.cat = c.slug; });
+    const sk = r => String(r.title || "").toLowerCase().replace(/^[^a-z0-9]+/, "");   // A-Z by title, ignoring leading symbols like $ or quotes
+    list.sort((a, b) => sk(a).localeCompare(sk(b), undefined, { numeric: true }));
     c.recipes = list;
   });
   buildIndex();
