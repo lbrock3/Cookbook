@@ -34,6 +34,7 @@ try {
     $db->exec('CREATE TABLE IF NOT EXISTS subs (id INTEGER PRIMARY KEY AUTOINCREMENT, cat TEXT NOT NULL, name TEXT NOT NULL DEFAULT "", data TEXT NOT NULL, ts INTEGER NOT NULL)');
     $db->exec('CREATE TABLE IF NOT EXISTS made (id INTEGER PRIMARY KEY AUTOINCREMENT, target TEXT NOT NULL, name TEXT NOT NULL, note TEXT NOT NULL DEFAULT "", img TEXT NOT NULL DEFAULT "", made_on TEXT NOT NULL DEFAULT "", token_hash TEXT NOT NULL, ts INTEGER NOT NULL)');
     $db->exec('CREATE INDEX IF NOT EXISTS made_target ON made(target)');
+    $db->exec('CREATE TABLE IF NOT EXISTS menus (slug TEXT PRIMARY KEY, title TEXT NOT NULL, items TEXT NOT NULL, ts INTEGER NOT NULL)');
     $db->exec('CREATE TABLE IF NOT EXISTS shares (code TEXT PRIMARY KEY, data TEXT NOT NULL, ts INTEGER NOT NULL)');
     $st = $db->query("SELECT v FROM meta WHERE k='salt'");
     $salt = $st->fetchColumn(); $st->closeCursor(); $st = null;
@@ -224,7 +225,11 @@ if ($method === 'GET') {
     foreach ($db->query('SELECT id,target,name,note,img,made_on,ts FROM made ORDER BY made_on DESC, id DESC LIMIT 2000')->fetchAll(PDO::FETCH_ASSOC) as $x) {
         $made[] = ['id' => (string)$x['id'], 'target' => $x['target'], 'name' => $x['name'], 'note' => $x['note'], 'img' => $x['img'], 'on' => $x['made_on'], 'ts' => (int)$x['ts'] * 1000];
     }
-    $res = ['posts' => array_map('publicPost', $rows), 'admin' => $admin, 'adminReady' => $configured, 'recipes' => $recipes, 'subs' => $subs, 'made' => $made];
+    $menus = [];
+    foreach ($db->query('SELECT slug,title,items FROM menus ORDER BY ts ASC, rowid ASC LIMIT 200')->fetchAll(PDO::FETCH_ASSOC) as $x) {
+        $menus[] = ['slug' => $x['slug'], 'title' => $x['title'], 'items' => json_decode($x['items'], true) ?: []];
+    }
+    $res = ['posts' => array_map('publicPost', $rows), 'admin' => $admin, 'adminReady' => $configured, 'recipes' => $recipes, 'subs' => $subs, 'made' => $made, 'menus' => $menus];
     if ($admin) { $res['backups'] = backupList($dir); $res['zip'] = class_exists('ZipArchive'); }
     out(200, $res);
 }
@@ -246,6 +251,36 @@ if ($action === 'login') {
     out(200, ['admin' => true]);
 }
 if ($action === 'logout') { $_SESSION = []; session_destroy(); out(200, ['admin' => false]); }
+
+if ($action === 'menu_save' || $action === 'menu_delete') {
+    if (!$admin) out(403, ['error' => 'keeper_only']);
+    $slug = (string)($in['slug'] ?? '');
+    if (!preg_match('/^[a-z0-9-]{1,60}$/', $slug)) out(400, ['error' => 'ids']);
+    $st = $db->prepare('SELECT 1 FROM menus WHERE slug=?'); $st->execute([$slug]);
+    $exists = (bool)$st->fetchColumn(); $st->closeCursor();
+    if ($action === 'menu_delete') {
+        if (!$exists) out(404, ['error' => 'not_found']);
+        $db->prepare('DELETE FROM menus WHERE slug=?')->execute([$slug]);
+        out(200, ['ok' => true]);
+    }
+    $title = clean((string)($in['title'] ?? ''), 80, false);
+    if ($title === '') out(400, ['error' => 'title']);
+    $items = [];
+    foreach (array_slice((array)($in['items'] ?? []), 0, 40) as $it) {
+        if (!is_array($it)) continue;
+        $c = (string)($it['cat'] ?? ''); $sl = (string)($it['slug'] ?? '');
+        if (!preg_match('/^[a-z0-9-]{1,60}$/', $c) || !preg_match('/^[A-Za-z0-9_.-]{1,80}$/', $sl)) continue;
+        $items[] = ['cat' => $c, 'slug' => $sl, 'title' => clean((string)($it['title'] ?? ''), 120, false)];
+    }
+    if (!$items) out(400, ['error' => 'empty']);
+    $isNew = !empty($in['isNew']);
+    if ($isNew && $exists) out(409, ['error' => 'exists']);
+    if (!$isNew && !$exists) out(404, ['error' => 'not_found']);
+    $json = json_encode($items, JSON_UNESCAPED_UNICODE);
+    if ($isNew) $db->prepare('INSERT INTO menus(slug,title,items,ts) VALUES(?,?,?,?)')->execute([$slug, $title, $json, time()]);
+    else $db->prepare('UPDATE menus SET title=?, items=? WHERE slug=?')->execute([$title, $json, $slug]);
+    out(200, ['ok' => true]);
+}
 
 if (in_array($action, ['recipe_save', 'recipe_move', 'recipe_delete', 'recipe_revert', 'photo_upload', 'sub_reject'], true)) {
     if (!$admin) out(403, ['error' => 'keeper_only']);

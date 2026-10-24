@@ -174,6 +174,11 @@ mark{background:var(--mark); color:inherit; padding:0 .1em; border-radius:2px}
 .empty{color:var(--soft); font-style:italic}
 
 /* menus */
+.mdishes{list-style:decimal; margin:.25rem 0 .75rem; padding-left:1.6rem; display:grid; gap:.35rem}
+.mdishes li{padding-left:.2rem}
+.mdishes li .mrow{display:flex; flex-wrap:wrap; gap:.25rem .75rem; align-items:baseline}
+.mdishes li small, .mres small{opacity:.7; margin-left:.4rem}
+.mres{list-style:none; margin:.35rem 0 0; padding:0; display:grid; gap:.2rem}
 .menus{display:grid; gap:1.25rem; grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr))}
 .menu-card{
   background:var(--card); border:1px solid var(--rule); border-radius:4px; box-shadow:var(--shadow); padding:1.4rem 1.3rem; text-align:center; text-decoration:none; color:var(--ink); display:block;
@@ -427,7 +432,12 @@ function buildIndex() {
   D.menus.forEach(m => menuBy[m.slug] = m);
 }
 buildIndex();
-let RSIG = "[]", RROWS = [];
+let RSIG = "", RROWS = [], MNSIG = "[]";   // RSIG starts empty so the first refresh always applies overrides (and the A-Z order)
+function applyMenus(rows) {   // menus the keeper added (GoDaddy version) follow the original ones
+  D.menus = JSON.parse(JSON.stringify(BASE_D.menus)).concat((rows || []).map(r => ({ slug: r.slug, title: r.title, items: r.items || [], custom: true })));
+  for (const k in menuBy) delete menuBy[k];
+  D.menus.forEach(m => menuBy[m.slug] = m);
+}
 const ALIAS = {};
 function canonId(id) { let n = 0; while (!recBy[id] && ALIAS[id] && n++ < 8) id = ALIAS[id]; return id; }
 function lookup(id) { return recBy[canonId(id)] || null; }
@@ -542,6 +552,7 @@ function recipe(r, opts) {
 function menusIndex() {
   return '<p class="crumbs"><a href="#">Contents</a><span aria-hidden="true">/</span>Favorite Menus</p>' +
     '<div class="chap"><h2 id="h">Favorite Menus</h2></div><p class="count">Meals the family comes back to, with each dish linked to its recipe.</p>' +
+    (PHP && DB.admin ? '<p class="noprint"><a class="btn" href="#menu-new">Add a menu</a></p>' : "") +
     '<div class="menus">' + D.menus.map(m => '<a class="menu-card" href="#menu~' + m.slug + '"><p class="eyebrow">' + m.items.length + ' dishes</p><h3>' + esc(m.title) + '</h3><p>' + esc(m.items.map(i => i.title).slice(0, 3).join(", ")) + (m.items.length > 3 ? ", and more" : "") + "</p></a>").join("") + "</div>";
 }
 function menuPage(m) {
@@ -550,7 +561,8 @@ function menuPage(m) {
     return "<li>" + (r ? '<a href="' + rlink(r) + '">' + esc(it.title) + "</a><small>" + esc(r.catName) + "</small>" : esc(it.title)) + "</li>";
   }).join("");
   return '<p class="crumbs"><a href="#">Contents</a><span aria-hidden="true">/</span><a href="#menus">Favorite Menus</a></p>' +
-    '<div class="menu-sheet"><div class="in"><p class="eyebrow">Favorite menu</p><h2 id="h">' + esc(m.title) + '</h2><div class="orn" aria-hidden="true"><i></i></div><ul class="menu-list">' + items + '</ul></div></div><div class="rtools noprint" style="justify-content:center;margin:1.25rem 0 0"><button type="button" class="btn ghost" data-gl-menu="' + esc(m.slug) + '">Add every dish to my grocery list</button><span class="gl-status" role="status"></span><a class="lk" href="#grocery" data-glview hidden>View grocery list</a></div>';
+    '<div class="menu-sheet"><div class="in"><p class="eyebrow">Favorite menu</p><h2 id="h">' + esc(m.title) + '</h2><div class="orn" aria-hidden="true"><i></i></div><ul class="menu-list">' + items + '</ul></div></div><div class="rtools noprint" style="justify-content:center;margin:1.25rem 0 0"><button type="button" class="btn ghost" data-gl-menu="' + esc(m.slug) + '">Add every dish to my grocery list</button><span class="gl-status" role="status"></span><a class="lk" href="#grocery" data-glview hidden>View grocery list</a></div>' +
+    (PHP && DB.admin && m.custom ? '<p class="noprint" style="text-align:center;margin:1rem 0 0"><a class="lk" href="#menu-edit~' + esc(m.slug) + '">Edit this menu</a></p>' : "");
 }
 
 function submitForm() {
@@ -759,11 +771,13 @@ async function phpRefresh(force) {
   const bs = JSON.stringify([j.backups || [], !!j.zip]);
   if (bs !== BSIG) { BSIG = bs; DB.backups = j.backups || []; DB.zip = !!j.zip; if (curRoute === "keeper") route("keeper", true); }
   if (subsSig !== SUBSIG) { SUBSIG = subsSig; DB.subs = j.subs || []; if (curRoute === "keeper" && DB.admin === wasAdmin) route(curRoute, true); }
+  const mnus = JSON.stringify(j.menus || []);
+  if (mnus !== MNSIG) { MNSIG = mnus; applyMenus(j.menus || []); if (curRoute === "menus" || /^menu~/.test(curRoute || "")) route(curRoute, true); }
   let changed = false;
   if (rs !== RSIG) { RSIG = rs; applyOverrides(j.recipes || []); changed = true; }
   if (changed || DB.admin !== wasAdmin) {
     paintDyn();
-    const onEditor = /^(edit~|new|keeper|review~)/.test(curRoute || "");
+    const onEditor = /^(edit~|new|keeper|review~|menu-)/.test(curRoute || "");
     if (curRoute !== null && (!onEditor || DB.admin !== wasAdmin)) route(curRoute, true);
   }
   const next = JSON.stringify(j.posts);
@@ -889,7 +903,7 @@ function keeperPage() {
     return "<li><span class=\"badge\" style=\"margin:0 .6rem 0 0\">" + state + "</span><b>" + esc(title) + '</b> <span class="when">' + esc(c.name) + '</span><div class="pact">' + acts + "</div></li>";
   }).join("");
   return crumbsFor("Edit Recipes") + '<div class="chap"><h2 id="h">Edit Recipes</h2></div><p class="count">Add a recipe, or open any recipe and choose “Edit this recipe”. Changes show up on the site right away.</p>' +
-    '<p><a class="btn" href="#new">Add a recipe</a></p>' + pendingList() + backupPanel() + '<h3 style="margin-top:2rem">Your changes</h3>' +
+    '<p><a class="btn" href="#new">Add a recipe</a> <a class="btn ghost" href="#menu-new">Add a menu</a></p>' + pendingList() + backupPanel() + '<h3 style="margin-top:2rem">Your changes</h3>' +
     (rows ? '<ul class="posts">' + rows + "</ul>" : '<p class="empty">No changes yet. Everything shown on the site is the original cookbook.</p>');
 }
 function fld(label, name, val, hint, kind) {
@@ -989,6 +1003,76 @@ document.addEventListener("click", async e => {
     const box = b.parentNode;
     try { await api({ action: "sub_reject", id: box.dataset.id }); await phpRefresh(true); if (box.dataset.back) go("keeper"); else route("keeper", true); } catch (err) { box.textContent = errText(err); }
   }
+});
+/* ---------- menu editor (keeper only, GoDaddy version) ---------- */
+function mItemsHtml(items) {
+  if (!items.length) return '<li class="hint">No dishes yet. Search below to add some.</li>';
+  return items.map((it, i) => {
+    const r = lookup(it.cat + "~" + it.slug);
+    return '<li><span class="mrow"><span>' + esc(r ? r.title : it.title) + (r ? "<small>" + esc(r.catName) + "</small>" : "") + "</span>" +
+      '<button type="button" class="lk" data-mact="up" data-i="' + i + '" aria-label="Move up"' + (i ? "" : " disabled") + '>Up</button>' +
+      '<button type="button" class="lk" data-mact="down" data-i="' + i + '" aria-label="Move down"' + (i < items.length - 1 ? "" : " disabled") + '>Down</button>' +
+      '<button type="button" class="lk" data-mact="rm" data-i="' + i + '" aria-label="Remove this dish">Remove</button></span></li>';
+  }).join("");
+}
+function menuEditor(slug) {
+  const t = slug ? "Edit Menu" : "Add a Menu";
+  const g = editGate(t); if (g) return g;
+  let m = { title: "", items: [] };
+  if (slug) {
+    m = menuBy[slug];
+    if (!m || !m.custom) return crumbsFor(t) + '<p class="empty">That menu can’t be changed here. <a href="#menus">Back to Favorite Menus</a></p>';
+  }
+  return crumbsFor(t) + '<div class="chap"><h2 id="h">' + t + '</h2></div><p class="count">Pick the dishes for a whole meal, in the order you want them listed. Each one links to its recipe.</p>' +
+    '<form class="rform" data-mform data-slug="' + esc(slug) + '" data-items="' + esc(JSON.stringify(m.items.map(i => ({ cat: i.cat, slug: i.slug, title: i.title })))) + '">' +
+    fld("Menu name", "title", m.title, "For example “Christmas Dinner”.") +
+    '<div class="fld"><label>Dishes on this menu</label><ol class="mdishes" data-mdishes>' + mItemsHtml(m.items) + '</ol></div>' +
+    '<div class="fld"><label for="m-find">Add a dish</label><input class="ti" id="m-find" autocomplete="off" placeholder="Start typing a recipe name"><ul class="mres" data-mres></ul><small class="hint">Choose a recipe from the list to add it.</small></div>' +
+    '<div class="rbar"><button class="btn" type="submit">Save menu</button><a class="lk" href="#' + (slug ? "menu~" + esc(slug) : "menus") + '">Cancel</a>' +
+    (slug ? '<span class="rdelbox"><button class="lk" type="button" data-mact="del">Delete this menu</button></span>' : "") + '</div><p class="rmsg" role="status"></p></form>';
+}
+const mItems = f => f._items || (f._items = JSON.parse(f.dataset.items || "[]"));
+function mPaint(f) { f.querySelector("[data-mdishes]").innerHTML = mItemsHtml(mItems(f)); }
+const mErr = e => e.code === "keeper_only" ? "Your keeper sign-in ended. Sign in again at the bottom of the page." : e.code === "empty" ? "Add at least one dish." : e.code === "title" ? "Please give the menu a name." : "Couldn’t save. Please try again.";
+document.addEventListener("input", e => {
+  const inp = e.target.closest && e.target.closest("#m-find"); if (!inp) return;
+  const f = inp.closest("form[data-mform]"), box = f.querySelector("[data-mres]"), q = inp.value.trim().toLowerCase();
+  if (!q) { box.innerHTML = ""; return; }
+  const have = new Set(mItems(f).map(i => i.cat + "~" + i.slug));
+  const hits = all.filter(r => r._t.includes(q) && !have.has(r.cat + "~" + r.slug)).slice(0, 8);
+  box.innerHTML = hits.length ? hits.map(r => '<li><button type="button" class="lk" data-mact="add" data-id="' + esc(r.cat + "~" + r.slug) + '">' + esc(r.title) + "<small>" + esc(r.catName) + "</small></button></li>").join("") : '<li class="hint">No recipe found with that name.</li>';
+});
+document.addEventListener("click", async e => {
+  const b = e.target.closest && e.target.closest("button[data-mact]"); if (!b) return;
+  const f = b.closest("form[data-mform]"); if (!f) return;
+  const act = b.dataset.mact, items = mItems(f), i = parseInt(b.dataset.i, 10);
+  if (act === "add") {
+    const r = lookup(b.dataset.id); if (!r || items.length >= 40) return;
+    items.push({ cat: r.cat, slug: r.slug, title: r.title });
+    mPaint(f); const inp = f.querySelector("#m-find"); inp.value = ""; f.querySelector("[data-mres]").innerHTML = ""; inp.focus();
+  } else if (act === "rm") { items.splice(i, 1); mPaint(f); }
+  else if (act === "up" && i > 0) { [items[i - 1], items[i]] = [items[i], items[i - 1]]; mPaint(f); }
+  else if (act === "down" && i < items.length - 1) { [items[i + 1], items[i]] = [items[i], items[i + 1]]; mPaint(f); }
+  else if (act === "del") {
+    const box = b.closest(".rdelbox"); box.dataset.orig = box.innerHTML;
+    box.innerHTML = 'Delete this menu? (The recipes stay.) <button class="lk danger" type="button" data-mact="delyes">Yes, delete</button> <button class="lk" type="button" data-mact="delno">Keep it</button>';
+  } else if (act === "delno") { const box = b.closest(".rdelbox"); box.innerHTML = box.dataset.orig; }
+  else if (act === "delyes") {
+    try { await api({ action: "menu_delete", slug: f.dataset.slug }); await phpRefresh(true); go("menus"); }
+    catch (err) { f.querySelector(".rmsg").textContent = mErr(err); }
+  }
+});
+document.addEventListener("submit", async e => {
+  const f = e.target.closest && e.target.closest("form[data-mform]"); if (!f) return;
+  e.preventDefault();
+  const title = f.elements.title.value.trim(), items = mItems(f), msg = f.querySelector(".rmsg"), btn = f.querySelector('button[type="submit"]');
+  if (!title) { msg.textContent = "Please give the menu a name."; return; }
+  if (!items.length) { msg.textContent = "Add at least one dish."; return; }
+  const isNew = !f.dataset.slug; let slug = f.dataset.slug;
+  if (isNew) { const b = slugify(title).replace(/^recipe$/, "menu"); let n = 2; slug = b; while (menuBy[slug]) slug = b + "-" + (n++); }
+  btn.disabled = true; msg.textContent = "Saving…";
+  try { await api({ action: "menu_save", slug, isNew, title, items }); await phpRefresh(true); go("menu~" + slug); }
+  catch (err) { msg.textContent = mErr(err); btn.disabled = false; }
 });
 /* photos are shrunk in the browser before they are sent */
 function shrinkPhoto(file, maxSide, quality) {
@@ -1696,6 +1780,8 @@ function resolve(h) {
   if (h.startsWith("edit~")) { const p = h.slice(5).split("~"); return { v: editorPage("edit", p[0], p[1]), nav: "keeper", title: "Edit Recipe" }; }
   if (h === "submit") return { v: submit(), nav: "submit", title: "Share a Recipe" };
   if (h === "surprise") return { v: surprisePage(), nav: "surprise", title: "Surprise Me" };
+  if (h === "menu-new") return { v: menuEditor(""), nav: "menus", title: "Add a Menu" };
+  if (h.startsWith("menu-edit~")) return { v: menuEditor(h.slice(10)), nav: "menus", title: "Edit Menu" };
   if (h.startsWith("menu~") && menuBy[h.slice(5)]) { const m = menuBy[h.slice(5)]; return { v: menuPage(m), nav: "menus", title: m.title }; }
   if (catBy[h]) return { v: category(catBy[h]), nav: "", title: catBy[h].name };
   if (recBy[h]) return { v: recipe(recBy[h]), nav: "", title: recBy[h].title, canon: h };
