@@ -483,7 +483,7 @@ function byline(r) {
 function groupIng(list) {
   const out = []; let cur = null;
   list.forEach(t => {
-    const m = t.match(/^([A-Z][A-Za-z&'’ \-\/]{1,34}):\s+(.+)$/);
+    const m = t.match(/^([A-Z][A-Za-z0-9&'’ \-\/]{1,34}):\s+(.+)$/);
     const sec = m ? m[1] : null, text = m ? m[2] : t;
     if (!cur || cur.sec !== sec) { cur = { sec, items: [] }; out.push(cur); }
     cur.items.push(text);
@@ -1557,7 +1557,7 @@ function scaleServes(v, k) {
   return f(m[1]) + (m[3] ? m[2] + f(m[3]) : "") + m[4];
 }
 function scalerHtml(r) {
-  const can = (r.ing || []).some(l => scaleLine(l, 2) !== l);
+  const can = groupIng(r.ing || []).some(g => g.items.some(l => scaleLine(l, 2) !== l));
   if (!can) return "";
   return '<div class="scaler noprint" role="group" aria-label="Scale this recipe"><span class="lbl">Make</span>' +
     SC_STEPS.map(x => '<button type="button" data-scale="' + x[0] + '" aria-pressed="' + (x[0] === SCALE) + '">' + x[1] + "</button>").join("") + '</div><p class="scale-note" hidden></p>';
